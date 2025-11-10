@@ -26,7 +26,7 @@ Alternatively, open the repository URL in `Android Studio` to clone it directly.
 1. **Configure Appwrite**  
    Open `lib/config/environment.dart` and update the values with your Appwrite project credentials:
    
-    Copy .env_example to .env and replace with your Appwrite Server Credentials to connect to your Database/Collection in appwrite
+- Copy .env_example to .env and replace with your Appwrite Server Credentials to connect to your Database/Collection in appwrite
    
 
 2. **Customize as Needed**  
