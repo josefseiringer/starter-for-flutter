@@ -39,104 +39,40 @@ class LoginPage extends GetView<LoginController> {
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      // Email Field
-                      TextFormField(
-                        decoration: InputDecoration(
-                          labelText: 'Email',
-                          labelStyle: const TextStyle(color: Colors.white),
-                          filled: true,
-                          fillColor: whiteOpacity100,
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8),
-                            borderSide: BorderSide(
-                              color: whiteOpacity100,
-                            ),
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8),
-                            borderSide: BorderSide(
-                              color: whiteOpacity100,
-                            ),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8),
-                            borderSide: const BorderSide(
-                              color: Colors.white,
-                              width: 2,
-                            ),
+                      // header icon
+                      IconButton(
+                        onPressed: () => logCtrl.logout(),
+                        icon: Obx(
+                          () => logCtrl.isSignIn.value
+                              ? Icon(Icons.app_registration,
+                                  color: Colors.white, size: 80)
+                              : Icon(Icons.login,
+                                  color: Colors.white, size: 80),
+                        ),
+                      ),
+                      // header Text
+                      Obx(
+                        () => Text(
+                          logCtrl.isSignIn.value ? 'Sign In' : 'Login',
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 32,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
-                        style: const TextStyle(color: Colors.white),
-                        keyboardType: TextInputType.emailAddress,
                       ),
+                      // Email Field
+                      _emailFormField(logCtrl, whiteOpacity100),
                       const SizedBox(height: 20),
 
                       // Password Field
-                      TextFormField(
-                        decoration: InputDecoration(
-                          labelText: 'Password',
-                          labelStyle: const TextStyle(color: Colors.white),
-                          filled: true,
-                          fillColor: whiteOpacity100,
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8),
-                            borderSide: BorderSide(
-                              color: whiteOpacity100,
-                            ),
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8),
-                            borderSide: BorderSide(
-                              color: whiteOpacity100,
-                            ),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8),
-                            borderSide: const BorderSide(
-                              color: Colors.white,
-                              width: 2,
-                            ),
-                          ),
-                        ),
-                        style: const TextStyle(color: Colors.white),
-                        obscureText: true,
-                        keyboardType: TextInputType.visiblePassword,
-                      ),
+                      _passwordFormField(logCtrl, whiteOpacity100),
                       const SizedBox(height: 20),
 
                       // Username Field
                       Obx(
                         () => logCtrl.isSignIn.value
-                            ? TextFormField(
-                                decoration: InputDecoration(
-                                  labelText: 'Username',
-                                  labelStyle:
-                                      const TextStyle(color: Colors.white),
-                                  filled: true,
-                                  fillColor: whiteOpacity100,
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(8),
-                                    borderSide: BorderSide(
-                                      color: whiteOpacity100,
-                                    ),
-                                  ),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(8),
-                                    borderSide: BorderSide(
-                                      color: whiteOpacity100,
-                                    ),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(8),
-                                    borderSide: const BorderSide(
-                                      color: Colors.white,
-                                      width: 2,
-                                    ),
-                                  ),
-                                ),
-                                style: const TextStyle(color: Colors.white),
-                                keyboardType: TextInputType.text,
-                              )
+                            ? _nameFormField(logCtrl, whiteOpacity100)
                             : const SizedBox.shrink(),
                       ),
                       Obx(
@@ -144,42 +80,10 @@ class LoginPage extends GetView<LoginController> {
                             ? const SizedBox(height: 20)
                             : const SizedBox.shrink(),
                       ),
-                      Container(
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(color: whiteOpacity100),
-                        padding: const EdgeInsets.symmetric(vertical: 10),
-                        child: Obx(() => logCtrl.isSignIn.value
-                            ? TextButton.icon(
-                                onPressed: () {},
-                                label: Text(
-                                  'SignIn',
-                                  style: TextStyle(
-                                    color: Colors.grey.shade900,
-                                    fontSize: 25,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                icon: Icon(
-                                  Icons.app_registration,
-                                  color: Colors.grey.shade900,
-                                  size: 30,
-                                ),
-                              )
-                            : TextButton.icon(
-                                onPressed: () {},
-                                label: Text(
-                                  'Login',
-                                  style: TextStyle(
-                                    color: Colors.grey.shade900,
-                                    fontSize: 25,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                icon: Icon(
-                                  Icons.login,
-                                  color: Colors.grey.shade900,
-                                  size: 30,
-                                ))),
+                      _logSignInButtonContainer(whiteOpacity100, logCtrl),
+                      const SizedBox(height: 20),
+                      Obx(
+                        () => _switchLogiSignInText(logCtrl),
                       ),
                     ],
                   ),
@@ -189,6 +93,169 @@ class LoginPage extends GetView<LoginController> {
           ),
         ],
       ),
+    );
+  }
+
+  TextButton _switchLogiSignInText(LoginController logCtrl) {
+    return TextButton(
+      onPressed: () {
+        logCtrl.isSignIn.toggle();
+      },
+      child: logCtrl.isSignIn.value
+          ? const Text(
+              'Already have an account? Login',
+              style: TextStyle(color: Colors.white),
+            )
+          : const Text(
+              'Don\'t have an account? Sign In',
+              style: TextStyle(color: Colors.white),
+            ),
+    );
+  }
+
+  Container _logSignInButtonContainer(
+      Color whiteOpacity100, LoginController logCtrl) {
+    return Container(
+      alignment: Alignment.center,
+      decoration: BoxDecoration(color: whiteOpacity100),
+      padding: const EdgeInsets.symmetric(vertical: 10),
+      child: Obx(
+        () => logCtrl.isSignIn.value
+            ? TextButton.icon(
+                onPressed: () => logCtrl.signUp(),
+                label: Text(
+                  'SignIn',
+                  style: TextStyle(
+                    color: Colors.grey.shade900,
+                    fontSize: 25,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                icon: Icon(
+                  Icons.app_registration,
+                  color: Colors.grey.shade900,
+                  size: 30,
+                ),
+              )
+            : TextButton.icon(
+                onPressed: () => logCtrl.login(),
+                label: Text(
+                  'Login',
+                  style: TextStyle(
+                    color: Colors.grey.shade900,
+                    fontSize: 25,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                icon: Icon(
+                  Icons.login,
+                  color: Colors.grey.shade900,
+                  size: 30,
+                ),
+              ),
+      ),
+    );
+  }
+
+  TextFormField _nameFormField(LoginController logCtrl, Color whiteOpacity100) {
+    return TextFormField(
+      controller: logCtrl.nameController,
+      decoration: InputDecoration(
+        labelText: 'Username',
+        labelStyle: const TextStyle(color: Colors.white),
+        filled: true,
+        fillColor: whiteOpacity100,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8),
+          borderSide: BorderSide(
+            color: whiteOpacity100,
+          ),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8),
+          borderSide: BorderSide(
+            color: whiteOpacity100,
+          ),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8),
+          borderSide: const BorderSide(
+            color: Colors.white,
+            width: 2,
+          ),
+        ),
+      ),
+      style: const TextStyle(color: Colors.white),
+      keyboardType: TextInputType.text,
+    );
+  }
+
+  TextFormField _passwordFormField(
+      LoginController logCtrl, Color whiteOpacity100) {
+    return TextFormField(
+      controller: logCtrl.passwordController,
+      decoration: InputDecoration(
+        labelText: 'Password',
+        labelStyle: const TextStyle(color: Colors.white),
+        filled: true,
+        fillColor: whiteOpacity100,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8),
+          borderSide: BorderSide(
+            color: whiteOpacity100,
+          ),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8),
+          borderSide: BorderSide(
+            color: whiteOpacity100,
+          ),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8),
+          borderSide: const BorderSide(
+            color: Colors.white,
+            width: 2,
+          ),
+        ),
+      ),
+      style: const TextStyle(color: Colors.white),
+      obscureText: true,
+      keyboardType: TextInputType.visiblePassword,
+    );
+  }
+
+  TextFormField _emailFormField(
+      LoginController logCtrl, Color whiteOpacity100) {
+    return TextFormField(
+      controller: logCtrl.emailController,
+      decoration: InputDecoration(
+        labelText: 'Email',
+        labelStyle: const TextStyle(color: Colors.white),
+        filled: true,
+        fillColor: whiteOpacity100,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8),
+          borderSide: BorderSide(
+            color: whiteOpacity100,
+          ),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8),
+          borderSide: BorderSide(
+            color: whiteOpacity100,
+          ),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8),
+          borderSide: const BorderSide(
+            color: Colors.white,
+            width: 2,
+          ),
+        ),
+      ),
+      style: const TextStyle(color: Colors.white),
+      keyboardType: TextInputType.emailAddress,
     );
   }
 }

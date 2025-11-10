@@ -4,7 +4,7 @@ class Log {
   final int status;
   final String method;
   final String path;
-  final String response;
+  final Map<String,dynamic> response;
 
   Log({
     required this.date,
