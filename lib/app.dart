@@ -1,19 +1,24 @@
-import './home.dart';
+
+import 'package:appwrite_flutter_tank_app_101125/ui/pages/login_view.dart';
+import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+
+import '../utils/sample_routes.dart';
 
 class AppwriteApp extends StatelessWidget {
   const AppwriteApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       title: 'Appwrite StarterKit',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         useMaterial3: true,
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: const AppwriteStarterKit(),
+      initialRoute: LoginPage.namedRoute,
+      getPages: SampleRouts.samplePages,
     );
   }
 }

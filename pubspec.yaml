@@ -17,6 +17,7 @@ dependencies:
   window_manager: ^0.4.3
   cupertino_icons: ^1.0.8
   flutter_dotenv: ^6.0.0
+  get: ^4.7.2
 
 dependency_overrides:
   flutter_web_auth_2: 4.1.0
