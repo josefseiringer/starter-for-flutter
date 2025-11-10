@@ -1,4 +1,4 @@
-package io.appwrite.flutter
+package net.ipv64.joshihomeserver.ta
 
 import io.flutter.embedding.android.FlutterActivity
 

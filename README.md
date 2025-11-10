@@ -71,3 +71,4 @@ production : https://docs.flutter.dev/deployment
 
 - This starter project is designed to streamline your Flutter development with Appwrite.
 - Refer to the [Appwrite Documentation](https://appwrite.io/docs) for detailed integration guidance.
+- Copy .env_example to .env and replace with your Appwrite Server Credentials to connect to your Database/Collection in appwrite

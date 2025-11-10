@@ -1,5 +1,5 @@
-name: appwrite_flutter_starter_kit
-description: "Appwrite StarterKit in Flutter"
+name: appwrite_flutter_tank_app_101125
+description: "Appwrite Tank App in Flutter"
 publish_to: 'none'
 
 version: 1.0.0
@@ -16,6 +16,7 @@ dependencies:
   url_launcher: ^6.3.1
   window_manager: ^0.4.3
   cupertino_icons: ^1.0.8
+  flutter_dotenv: ^6.0.0
 
 dependency_overrides:
   flutter_web_auth_2: 4.1.0
@@ -27,3 +28,6 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/
+    - .env

@@ -1,6 +1,6 @@
-import 'package:appwrite_flutter_starter_kit/data/models/status.dart';
-import 'package:appwrite_flutter_starter_kit/ui/icons/appwrite.dart';
-import 'package:appwrite_flutter_starter_kit/utils/extensions/build_context.dart';
+import '../../data/models/status.dart';
+import '../../ui/icons/appwrite.dart';
+import '../../utils/extensions/build_context.dart';
 import 'package:flutter/material.dart';
 
 import 'connection_line.dart';

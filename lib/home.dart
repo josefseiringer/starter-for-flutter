@@ -1,12 +1,12 @@
-import 'package:appwrite_flutter_starter_kit/data/models/log.dart';
-import 'package:appwrite_flutter_starter_kit/data/models/status.dart';
-import 'package:appwrite_flutter_starter_kit/data/repository/appwrite_repository.dart';
-import 'package:appwrite_flutter_starter_kit/ui/components/checkered_background.dart';
-import 'package:appwrite_flutter_starter_kit/ui/components/collapsible_bottomsheet.dart';
-import 'package:appwrite_flutter_starter_kit/ui/components/connection_status_view.dart';
-import 'package:appwrite_flutter_starter_kit/ui/components/getting_started_cards.dart';
-import 'package:appwrite_flutter_starter_kit/ui/components/top_platform_view.dart';
-import 'package:appwrite_flutter_starter_kit/utils/extensions/build_context.dart';
+import '../../data/models/log.dart';
+import '../../data/models/status.dart';
+import '../../data/repository/appwrite_repository.dart';
+import '../../ui/components/checkered_background.dart';
+import '../../ui/components/collapsible_bottomsheet.dart';
+import '../../ui/components/connection_status_view.dart';
+import '../../ui/components/getting_started_cards.dart';
+import '../../ui/components/top_platform_view.dart';
+import '../../utils/extensions/build_context.dart';
 import 'package:flutter/material.dart';
 
 class AppwriteStarterKit extends StatefulWidget {

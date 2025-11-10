@@ -1,4 +1,4 @@
-import 'package:appwrite_flutter_starter_kit/home.dart';
+import './home.dart';
 import 'package:flutter/material.dart';
 
 class AppwriteApp extends StatelessWidget {

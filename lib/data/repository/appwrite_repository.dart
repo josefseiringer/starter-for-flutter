@@ -1,17 +1,19 @@
 import 'package:intl/intl.dart';
 import 'package:appwrite/appwrite.dart';
-import 'package:appwrite_flutter_starter_kit/data/models/log.dart';
-import 'package:appwrite_flutter_starter_kit/data/models/project_info.dart';
-import 'package:appwrite_flutter_starter_kit/config/environment.dart';
+import '../../data/models/log.dart';
+import '../../data/models/project_info.dart';
+import '../../config/environment.dart';
 
 /// A repository responsible for handling network interactions with the Appwrite server.
 ///
 /// It provides a helper method to ping the server.
 class AppwriteRepository {
   static const String pingPath = "/ping";
-  static const String appwriteProjectId = Environment.appwriteProjectId;
-  static const String appwriteProjectName = Environment.appwriteProjectName;
-  static const String appwritePublicEndpoint = Environment.appwritePublicEndpoint;
+  static final String appwriteProjectId = Environment.appwriteProjectId;
+  static final String appwriteProjectName = Environment.appwriteProjectName;
+  static final String appwriteDatabaseId = Environment.appwriteDatabaseId;
+  static final String appwriteUsersCollectionId = Environment.appwriteUsersCollectionId;
+  static final String appwritePublicEndpoint = Environment.appwritePublicEndpoint;
 
   final Client _client = Client()
       .setProject(appwriteProjectId)
