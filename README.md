@@ -26,11 +26,7 @@ Alternatively, open the repository URL in `Android Studio` to clone it directly.
 1. **Configure Appwrite**  
    Open `lib/config/environment.dart` and update the values with your Appwrite project credentials:
    ```dart
-   class Environment {
-      static const String appwritePublicEndpoint = '[appwritePublicEndpoint]';
-      static const String appwriteProjectId = '[appwriteProjectId]';
-      static const String appwriteProjectName = '[appwriteProjectName]';
-   }
+    Copy .env_example to .env and replace with your Appwrite Server Credentials to connect to your Database/Collection in appwrite
    ```
 
 2. **Customize as Needed**  
@@ -71,4 +67,3 @@ production : https://docs.flutter.dev/deployment
 
 - This starter project is designed to streamline your Flutter development with Appwrite.
 - Refer to the [Appwrite Documentation](https://appwrite.io/docs) for detailed integration guidance.
-- Copy .env_example to .env and replace with your Appwrite Server Credentials to connect to your Database/Collection in appwrite
