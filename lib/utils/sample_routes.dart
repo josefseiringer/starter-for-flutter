@@ -1,11 +1,12 @@
 
-
 import 'package:get/get.dart';
 
-import '../ui/pages/list_view.dart';
 import '../ui/pages/login_view.dart';
+import '../ui/pages/list_view.dart';
+import '../ui/pages/add_edit_view.dart';
 import '../utils/bindings/login_binding.dart';
-import './bindings/list_binding.dart';
+import '../utils/bindings/list_binding.dart';
+import '../utils/bindings/add_edit_binding.dart';
 
 class SampleRouts {
 
@@ -21,6 +22,12 @@ class SampleRouts {
       name: ListPage.namedRoute,
       binding: ListBinding(),
       page: () => const ListPage(),
+    ),
+    // Add Edit Page
+    GetPage(
+      name: AddEditPage.namedRoute,
+      binding: AddEditBinding(),
+      page: () => const AddEditPage(),
     ),
 
   ];

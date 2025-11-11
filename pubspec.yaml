@@ -18,6 +18,8 @@ dependencies:
   cupertino_icons: ^1.0.8
   flutter_dotenv: ^6.0.0
   get: ^4.7.2
+  geolocator: ^14.0.2
+  http: ^1.6.0
 
 dependency_overrides:
   flutter_web_auth_2: 4.1.0

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../models/list_model.dart';
 import '../models/log.dart';
+import '../../ui/pages/add_edit_view.dart';
 import '../../ui/pages/login_view.dart';
 import '../../data/repository/appwrite_repository.dart';
 
@@ -65,7 +66,11 @@ class ListController extends GetxController {
     update();
   }
 
-  void addItem() {}
+  void addItem() {
+    Get.offAllNamed(AddEditPage.namedRoute);
+  }
 
-  void editItem(ListModel item) {}
+  void editItem(ListModel item) {
+    Get.offAllNamed(AddEditPage.namedRoute, arguments: item);
+  }
 }

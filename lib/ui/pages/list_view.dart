@@ -1,4 +1,3 @@
-import 'package:appwrite_flutter_tank_app_101125/data/models/list_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../data/controller/list_controller.dart';
