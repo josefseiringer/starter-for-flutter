@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import '../../data/repository/appwrite_repository.dart';
+import '../../ui/pages/list_view.dart';
 import '../models/log.dart';
 
 class LoginController extends GetxController {
@@ -62,7 +63,7 @@ class LoginController extends GetxController {
     var result = _logData.response;
     szUserId(result['userId']);
     //go to HomePage and Display List data
-
+    await Get.offAndToNamed(ListPage.namedRoute);
     _clearInputFields();
   }
 

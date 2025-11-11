@@ -150,18 +150,24 @@ class AppwriteRepository {
   }
 
   /// Listet alle Dokumente einer Collection auf.
-  Future<Log> listDocuments(String collectionId) async {
+  Future<Log> listDocuments() async {
     try {
+      final session = await _account.getSession(sessionId: 'current');
+      final userId = session.userId;
       final response = await _databases.listDocuments(
         databaseId: appwriteDatabaseId,
-        collectionId: collectionId,
+        collectionId: appwriteUsersCollectionId,
+        queries: ([
+          Query.equal('userId', userId), 
+          Query.orderDesc( '\$createdAt'),
+        ]),
       );
       return Log(
         date: _getCurrentDate(),
         status: 200,
         method: "GET",
         path:
-            "/databases/$appwriteDatabaseId/collections/$collectionId/documents",
+            "/databases/$appwriteDatabaseId/collections/$appwriteUsersCollectionId/documents",
         response: response.toMap(),
       );
     } on AppwriteException catch (error) {
@@ -170,7 +176,7 @@ class AppwriteRepository {
         status: error.code ?? 500,
         method: "GET",
         path:
-            "/databases/$appwriteDatabaseId/collections/$collectionId/documents",
+            "/databases/$appwriteDatabaseId/collections/$appwriteUsersCollectionId/documents",
         response: {'error': error.message ?? "Unknown error"},
       );
     }
@@ -207,11 +213,11 @@ class AppwriteRepository {
   }
 
   /// Löscht ein Dokument.
-  Future<Log> deleteDocument(String collectionId, String documentId) async {
+  Future<Log> deleteDocument(String documentId) async {
     try {
       await _databases.deleteDocument(
         databaseId: appwriteDatabaseId,
-        collectionId: collectionId,
+        collectionId: appwriteUsersCollectionId,
         documentId: documentId,
       );
       return Log(
@@ -219,7 +225,7 @@ class AppwriteRepository {
         status: 204,
         method: "DELETE",
         path:
-            "/databases/$appwriteDatabaseId/collections/$collectionId/documents/$documentId",
+            "/databases/$appwriteDatabaseId/collections/$appwriteUsersCollectionId/documents/$documentId",
         response: {"message": "Document deleted successfully"},
       );
     } on AppwriteException catch (error) {
@@ -228,7 +234,7 @@ class AppwriteRepository {
         status: error.code ?? 500,
         method: "DELETE",
         path:
-            "/databases/$appwriteDatabaseId/collections/$collectionId/documents/$documentId",
+            "/databases/$appwriteDatabaseId/collections/$appwriteUsersCollectionId/documents/$documentId",
         response: {'error': error.message ?? "Unknown error"},
       );
     }
@@ -261,5 +267,9 @@ class AppwriteRepository {
   /// @return [String] A formatted date.
   String _getCurrentDate() {
     return DateFormat("MMM dd, HH:mm").format(DateTime.now());
+  }
+
+  Future getCurrentUser() async {
+    return await _account.get();
   }
 }
