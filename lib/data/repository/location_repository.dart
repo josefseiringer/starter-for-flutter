@@ -60,25 +60,39 @@ class LocationProvider {
         'https://api.myptv.com/geocoding/v1/locations/by-position/$lat/$lng?language=de&apiKey=$kPtvApiKey';
     final client = http.Client();
     try {
+      debugPrint('Fetching location data from: $ptvGeoLink');
+      
       final response = await client.get(
         Uri.parse(ptvGeoLink),
         headers: {'Content-Type': 'application/json', 'charset': 'utf-8'},
+      ).timeout(
+        const Duration(seconds: 10),
+        onTimeout: () {
+          throw Exception('Request timeout after 10 seconds');
+        },
       );
+      
+      debugPrint('Response status: ${response.statusCode}');
+      
       if (response.statusCode == 200) {
         //Response is succsessful
         data = json.decode(
           utf8.decode(response.bodyBytes),
         );
+      } else {
+        debugPrint('Failed response: ${response.body}');
+        data = {'error': 'HTTP ${response.statusCode}: ${response.reasonPhrase}'};
       }
+      
       return Log(
         date: _getCurrentDate(),
-        status: 200,
+        status: response.statusCode,
         method: "GET",
         path: "locations/by-position/$lat/$lng?language=de&apiKey=$kPtvApiKey",
         response: data,
       );
     } catch (error) {
-      print('Error fetching location data: $error');
+      debugPrint('Error fetching location data: $error');
       return Log(
         date: _getCurrentDate(),
         status: 500,
@@ -86,7 +100,7 @@ class LocationProvider {
         path: "locations/by-position/$lat/$lng?language=de&apiKey=$kPtvApiKey",
         response: {'error': error.toString()},
       );
-    }finally {
+    } finally {
       client.close();
     }
   }
@@ -96,30 +110,54 @@ class LocationProvider {
     String locationOrt = '?';
     var lat = map['lat'];
     var lng = map['lng'];
+    
     // Hier kannst du die Logik hinzufügen, um den Standort zu verwenden, z.B.
     String ptvGeoLink =
         'https://api.myptv.com/geocoding/v1/locations/by-position/$lat/$lng?language=de&apiKey=$kPtvApiKey';
+    
     final client = http.Client();
-    var response = await client.get(
-      Uri.parse(ptvGeoLink),
-      headers: {'Content-Type': 'application/json', 'charset': 'utf-8'},
-    );
-    //Response Data status
-    if (response.statusCode == 200) {
-      //Response is succsessful
-      Map<String, dynamic> data = json.decode(
-        utf8.decode(response.bodyBytes),
-      ); //get response data
-      Map<String, dynamic> mapOfAddressfromPosition =
-          data['locations'][0]['address']; //get response address of position
-      if (mapOfAddressfromPosition.isNotEmpty) {
-        locationOrt =
-            '${mapOfAddressfromPosition['street'].toString()} ${mapOfAddressfromPosition['houseNumber'].toString()}, ${mapOfAddressfromPosition['postalCode'].toString()} ${mapOfAddressfromPosition['city'].toString()}';
+    try {
+      debugPrint('Fetching location from: $ptvGeoLink');
+      
+      var response = await client.get(
+        Uri.parse(ptvGeoLink),
+        headers: {'Content-Type': 'application/json', 'charset': 'utf-8'},
+      ).timeout(
+        const Duration(seconds: 10),
+        onTimeout: () {
+          throw Exception('Request timeout');
+        },
+      );
+      
+      debugPrint('Response status: ${response.statusCode}');
+      
+      //Response Data status
+      if (response.statusCode == 200) {
+        //Response is succsessful
+        Map<String, dynamic> data = json.decode(
+          utf8.decode(response.bodyBytes),
+        ); //get response data
+        
+        if (data.containsKey('locations') && data['locations'].isNotEmpty) {
+          Map<String, dynamic> mapOfAddressfromPosition =
+              data['locations'][0]['address']; //get response address of position
+          if (mapOfAddressfromPosition.isNotEmpty) {
+            locationOrt =
+                '${mapOfAddressfromPosition['street'].toString()} ${mapOfAddressfromPosition['houseNumber'].toString()}, ${mapOfAddressfromPosition['postalCode'].toString()} ${mapOfAddressfromPosition['city'].toString()}';
+          }
+        } else {
+          debugPrint('No locations found in response');
+        }
+      } else {
+        debugPrint('Failed to fetch location. Status: ${response.statusCode}');
+        debugPrint('Response body: ${response.body}');
       }
-    } else {
-      debugPrint(response.statusCode.toString());
+    } catch (error) {
+      debugPrint('Error fetching location: $error');
+      locationOrt = 'Failed to fetch location';
+    } finally {
+      client.close();
     }
-    client.close();
 
     return locationOrt;
   }
