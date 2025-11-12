@@ -44,14 +44,19 @@ class ListController extends GetxController {
       await Future.delayed(const Duration(seconds: 2));
       // Your code to fetch list from Appwrite goes here
       _logData = await _appwriteRepository.listDocuments();
-      //print(_logData.response);
-      _logData.response['documents'].forEach((item) {
-        var dataItem = item['data'];
-        listTankModel.add(ListModel.fromMap(dataItem));
-      });
-      print('List fetched: ${listTankModel.length} items');
-      var currentUser = await _appwriteRepository.getCurrentUser();
-      userName(currentUser.name ?? 'No Name');
+      print(_logData.response);
+      if (_logData.status == 200) {
+        listTankModel.clear();
+        _logData.response['documents'].forEach((item) {
+          var dataItem = item['data'];
+          listTankModel.add(ListModel.fromMap(dataItem));
+        });
+        print('List fetched: ${listTankModel.length} items');
+        var currentUser = await _appwriteRepository.getCurrentUser();
+        userName(currentUser.name ?? 'No Name');
+      } else {
+        print('Error fetching list: ${_logData.response.toString()}');
+      }
     } catch (e) {
       print('Error: $e');
     } finally {

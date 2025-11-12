@@ -74,20 +74,23 @@ class AddEditController extends GetxController {
     if (_currentPosition.latitude != 0.0 && _currentPosition.longitude != 0.0) {
       print( 'Current Position: Lat: ${_currentPosition.latitude}, Lng: ${_currentPosition.longitude}');
     // You can use _currentPosition to update locationController if needed
-    _logData = await _locationProvider.getAddressLocationLogData(
-        {'lat': _currentPosition.latitude, 'lng': _currentPosition.longitude});
+    //_logData = await _locationProvider.getAddressLocationLogData({'lat': _currentPosition.latitude, 'lng': _currentPosition.longitude});
     // Handle _logData as needed in add Mode
-    if (isEditMode.isFalse && _logData.status == 200) {
-      Map<String, dynamic> mapOfAddressfromPosition =
-          _logData.response['locations'][0]
-              ['address']; //get response address of position
-      if (mapOfAddressfromPosition.isNotEmpty) {
-        addressController.text =
-            '${mapOfAddressfromPosition['street'].toString()} ${mapOfAddressfromPosition['houseNumber'].toString()}, ${mapOfAddressfromPosition['postalCode'].toString()} ${mapOfAddressfromPosition['city'].toString()}';
-      }
-    } else {
-      print('Error fetching address: ${_logData.response.toString()}');
-    }
+    // if (isEditMode.isFalse && _logData.status == 200) {
+    //   Map<String, dynamic> mapOfAddressfromPosition =
+    //       _logData.response['locations'][0]
+    //           ['address']; //get response address of position
+    //   if (mapOfAddressfromPosition.isNotEmpty) {
+    //     addressController.text =
+    //         '${mapOfAddressfromPosition['street'].toString()} ${mapOfAddressfromPosition['houseNumber'].toString()}, ${mapOfAddressfromPosition['postalCode'].toString()} ${mapOfAddressfromPosition['city'].toString()}';
+    //   }
+    // } else {
+    //   print('Error fetching address: ${_logData.response.toString()}');
+    // }
+    addressController.text = await _locationProvider.getNearbyLocation({
+        'lat': _currentPosition.latitude,
+        'lng': _currentPosition.longitude
+      });
     } else {
       print('Could not fetch location.');
       return;

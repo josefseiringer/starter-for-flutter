@@ -62,6 +62,12 @@ class LoginController extends GetxController {
     _logData = await _appwriteRepository.login(email, password);
     var result = _logData.response;
     szUserId(result['userId']);
+    if(_logData.status != 200){
+      Get.snackbar('Error', 'Login failed: ${result['error']}',
+          backgroundColor: const Color.fromARGB(255, 255, 0, 0),
+          colorText: const Color.fromRGBO(255, 255, 255, 1));
+      return;
+    }
     //go to HomePage and Display List data
     await Get.offAndToNamed(ListPage.namedRoute);
     _clearInputFields();

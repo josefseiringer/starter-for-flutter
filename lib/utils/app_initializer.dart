@@ -6,7 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:window_manager/window_manager.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-import 'http_override.dart';
+//import 'http_override.dart';
 
 /// A utility class for initializing the Flutter application.
 ///
@@ -23,7 +23,7 @@ class AppInitializer {
     await _setupWindowDimensions();
     await _setupDeviceOrientation();
     await dotenv.load(fileName: ".env");
-    HttpOverrides.global = MyHttpOverrides();
+    //HttpOverrides.global = MyHttpOverrides();
   }
 
   /// Ensures that Flutter bindings are initialized.
