@@ -14,7 +14,7 @@ class AddEditController extends GetxController {
   late TextEditingController litersController;
   late TextEditingController pricePerLiterController;
   late TextEditingController addressController;
-  late LocationProvider _locationProvider;
+  final LocationProvider _locationProvider = LocationProvider();
   late Position _currentPosition;
   late Log _logData;
   final tankModelItem = ListModel(
@@ -32,7 +32,6 @@ class AddEditController extends GetxController {
   @override
   void onInit() {
     _logData = Log(date: '', status: 0, method: '', path: '', response: {});
-    _locationProvider = LocationProvider();
     if (Get.arguments != null && Get.arguments is ListModel) {
       tankModelItem(Get.arguments as ListModel);
       isEditMode(true);
