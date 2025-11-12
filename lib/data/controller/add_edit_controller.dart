@@ -139,4 +139,19 @@ class AddEditController extends GetxController {
     dateController.text =
         "${currentDate.year}-${currentDate.month}-${currentDate.day}";
   }
+
+  void saveOrUpdateEntry() {
+    if (formKey.value.currentState!.validate()) {
+      // Perform save or update operation
+      if (isEditMode.value) {
+        // Update existing entry
+        print('Updating entry...');
+      } else {
+        // Save new entry
+        print('Saving new entry...');
+      }
+      // After saving or updating, navigate back to the list view
+      goToList();
+    }
+  }
 }

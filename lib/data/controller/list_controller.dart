@@ -10,13 +10,12 @@ class ListController extends GetxController {
   final isloading = false.obs;
   final listTankModel = <ListModel>[].obs;
   final userName = 'No Name'.obs;
-  late AppwriteRepository _appwriteRepository;
+  final AppwriteRepository _appwriteRepository = AppwriteRepository();
   late Log _logData;
 
   @override
   void onInit() {
     _logData = Log(date: '', status: 0, method: '', path: '', response: {});
-    _appwriteRepository = AppwriteRepository();
     _getListFromAppwrite();
     super.onInit();
   }

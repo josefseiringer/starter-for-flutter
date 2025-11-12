@@ -45,7 +45,12 @@ class AddEditPage extends GetView<AddEditController> {
                 key: editCtrl.formKey.value,
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 child: Container(
-                  margin: EdgeInsets.symmetric(horizontal: 30),
+                  decoration: BoxDecoration(
+                    color: Colors.white.withAlpha(200),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  margin: EdgeInsets.all(20),
+                  padding: EdgeInsets.symmetric(horizontal: 30),
                   child: ListView(
                     children: [
                       SizedBox(height: 20),
@@ -140,6 +145,7 @@ class AddEditPage extends GetView<AddEditController> {
                       ElevatedButton(
                         onPressed: () {
                           // Save or Update logic here
+                          editCtrl.saveOrUpdateEntry();
                         },
                         child: Text(
                           editCtrl.isEditMode.value ? 'Update' : 'Save',
