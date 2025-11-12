@@ -78,6 +78,7 @@ class LocationProvider {
         response: data,
       );
     } catch (error) {
+      print('Error fetching location data: $error');
       return Log(
         date: _getCurrentDate(),
         status: 500,

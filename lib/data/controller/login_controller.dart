@@ -1,4 +1,4 @@
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../data/repository/appwrite_repository.dart';
 import '../../ui/pages/list_view.dart';
@@ -57,20 +57,43 @@ class LoginController extends GetxController {
 
   void login() async {
     _checkInput();
-    var email = emailController.text.trim();
-    var password = passwordController.text.trim();
-    _logData = await _appwriteRepository.login(email, password);
-    var result = _logData.response;
-    szUserId(result['userId']);
-    if(_logData.status != 200){
-      Get.snackbar('Error', 'Login failed: ${result['error']}',
+    
+    // Zeige Loading-Indicator
+    Get.dialog(
+      Center(child: CircularProgressIndicator()),
+      barrierDismissible: false,
+    );
+    
+    try {
+      var email = emailController.text.trim();
+      var password = passwordController.text.trim();
+      _logData = await _appwriteRepository.login(email, password);
+      var result = _logData.response;
+      
+      // Schließe Loading-Dialog
+      Get.back();
+      
+      szUserId(result['userId']);
+      if(_logData.status != 200){
+        print('Login failed: ${result['error']}');
+        Get.snackbar('Error', 'Login failed: ${result['error']}',
+            backgroundColor: const Color.fromARGB(255, 255, 0, 0),
+            colorText: const Color.fromRGBO(255, 255, 255, 1),
+            duration: const Duration(seconds: 5));
+        return;
+      }
+      //go to HomePage and Display List data
+      await Get.offAndToNamed(ListPage.namedRoute);
+      _clearInputFields();
+    } catch (e) {
+      // Schließe Loading-Dialog bei Fehler
+      Get.back();
+      print('Login exception: $e');
+      Get.snackbar('Error', 'Connection failed. Please check your network.',
           backgroundColor: const Color.fromARGB(255, 255, 0, 0),
-          colorText: const Color.fromRGBO(255, 255, 255, 1));
-      return;
+          colorText: const Color.fromRGBO(255, 255, 255, 1),
+          duration: const Duration(seconds: 5));
     }
-    //go to HomePage and Display List data
-    await Get.offAndToNamed(ListPage.namedRoute);
-    _clearInputFields();
   }
 
   void logout() async {

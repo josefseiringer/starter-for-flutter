@@ -6,7 +6,7 @@ plugins {
 
 android {
     ndkVersion = "26.1.10909125"
-    namespace = "net.ipv64.joshihomeserver.ta"
+    namespace = "net.ipv64.joshihomeserver.ta.appwrite_flutter_tank_app_101125"
     compileSdk = flutter.compileSdkVersion
 
     compileOptions {
@@ -19,7 +19,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "net.ipv64.joshihomeserver.ta"
+        applicationId = "net.ipv64.joshihomeserver.ta.appwrite_flutter_tank_app_101125"
 
         minSdk = flutter.minSdkVersion
         targetSdk = flutter.targetSdkVersion

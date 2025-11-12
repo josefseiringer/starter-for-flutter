@@ -21,7 +21,7 @@ class AddEditPage extends GetView<AddEditController> {
               icon: const Icon(Icons.arrow_back),
             ),
             title: Obx(
-              () => Text(controller.isEditMode.value
+              () => Text(editCtrl.isEditMode.value
                   ? 'Eintrag bearbeiten'
                   : 'Eintrag hinzufügen'),
             ),
@@ -33,38 +33,123 @@ class AddEditPage extends GetView<AddEditController> {
               ),
             ],
           ),
-          body: Container(
-            padding: const EdgeInsets.all(18),
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage('assets/mazdaCX60.png'),
+          body: Stack(
+            alignment: AlignmentGeometry.center,
+            fit: StackFit.expand,
+            children: [
+              Image.asset(
+                'assets/mazdaCX60.png',
                 fit: BoxFit.cover,
               ),
-            ),
-            child: ListView(
-              children: [
-                Text(
-                  editCtrl.isEditMode.value
-                      ? 'Edit Mode - Form goes here ${editCtrl.addressController.text}'
-                      : 'Add Mode - Form goes here',
-                  style: const TextStyle(
-                    fontSize: 24,
-                    color: Colors.white,
+              Form(
+                key: editCtrl.formKey.value,
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+                child: Container(
+                  margin: EdgeInsets.symmetric(horizontal: 30),
+                  child: ListView(
+                    children: [
+                      SizedBox(height: 20),
+                      // Add your form fields here
+                      TextFormField(
+                        readOnly: true,
+                        onTap: () async {
+                          editCtrl.getDateFromDateTimePicker(context);
+                        },
+                        controller: editCtrl.dateController,
+                        decoration: const InputDecoration(
+                          labelText: 'Datum',
+                          border: OutlineInputBorder(),
+                        ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Bitte Datum eingeben';
+                          }
+                          return null;
+                        },
+                      ),
+                      SizedBox(height: 20),
+                      TextFormField(
+                        controller: editCtrl.odometerController,
+                        decoration: const InputDecoration(
+                          labelText: 'Kilometerstand',
+                          border: OutlineInputBorder(),
+                        ),
+                        keyboardType: TextInputType.number,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Bitte Kilometerstand eingeben';
+                          }
+                          if (double.tryParse(value) == null) {
+                            return 'Bitte eine gültige Zahl eingeben';
+                          }
+                          return null;
+                        },
+                      ),
+                      SizedBox(height: 20),
+                      TextFormField(
+                        controller: editCtrl.litersController,
+                        decoration: const InputDecoration(
+                          labelText: 'Liter',
+                          border: OutlineInputBorder(),
+                        ),
+                        keyboardType: TextInputType.number,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Bitte Liter eingeben';
+                          }
+                          if (double.tryParse(value) == null) {
+                            return 'Bitte eine gültige Zahl eingeben';
+                          }
+                          return null;
+                        },
+                      ),
+                      SizedBox(height: 20),
+                      TextFormField(
+                        controller: editCtrl.pricePerLiterController,
+                        decoration: const InputDecoration(
+                          labelText: 'Preis pro Liter',
+                          border: OutlineInputBorder(),
+                        ),
+                        keyboardType: TextInputType.number,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Bitte Preis pro Liter eingeben';
+                          }
+                          if (double.tryParse(value) == null) {
+                            return 'Bitte eine gültige Zahl eingeben';
+                          }
+                          return null;
+                        },
+                      ),
+                      SizedBox(height: 20),
+                      TextFormField(
+                        controller: editCtrl.addressController,
+                        decoration: const InputDecoration(
+                          labelText: 'Adresse',
+                          border: OutlineInputBorder(),
+                        ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Bitte Adresse eingeben';
+                          }
+                          return null;
+                        },
+                      ),
+                      SizedBox(height: 40),
+                      // Button save Update
+                      ElevatedButton(
+                        onPressed: () {
+                          // Save or Update logic here
+                        },
+                        child: Text(
+                          editCtrl.isEditMode.value ? 'Update' : 'Save',
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-                SizedBox(height: 20),
-                // Add your form fields here
-                // Button save Update
-                ElevatedButton(
-                  onPressed: () {
-                    // Save or Update logic here
-                  },
-                  child: Text(
-                    editCtrl.isEditMode.value ? 'Update' : 'Save',
-                  ),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),

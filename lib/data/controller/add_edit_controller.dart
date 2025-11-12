@@ -27,6 +27,8 @@ class AddEditController extends GetxController {
           location: '')
       .obs;
 
+  final formKey = GlobalKey<FormState>().obs;
+
   @override
   void onInit() {
     _logData = Log(date: '', status: 0, method: '', path: '', response: {});
@@ -42,13 +44,15 @@ class AddEditController extends GetxController {
       litersController = TextEditingController();
       pricePerLiterController = TextEditingController();
       addressController = TextEditingController();
+      getInitialDate();
+      _getLocation();
     }
     super.onInit();
   }
 
   @override
   void onReady() async {
-    await _getLocation();     
+    //await _getLocation();
   }
 
   @override
@@ -72,22 +76,26 @@ class AddEditController extends GetxController {
     // Implement location fetching logic here
     _currentPosition = await _locationProvider.getCurrentPosition();
     if (_currentPosition.latitude != 0.0 && _currentPosition.longitude != 0.0) {
-      print( 'Current Position: Lat: ${_currentPosition.latitude}, Lng: ${_currentPosition.longitude}');
-    // You can use _currentPosition to update locationController if needed
-    //_logData = await _locationProvider.getAddressLocationLogData({'lat': _currentPosition.latitude, 'lng': _currentPosition.longitude});
-    // Handle _logData as needed in add Mode
-    // if (isEditMode.isFalse && _logData.status == 200) {
-    //   Map<String, dynamic> mapOfAddressfromPosition =
-    //       _logData.response['locations'][0]
-    //           ['address']; //get response address of position
-    //   if (mapOfAddressfromPosition.isNotEmpty) {
-    //     addressController.text =
-    //         '${mapOfAddressfromPosition['street'].toString()} ${mapOfAddressfromPosition['houseNumber'].toString()}, ${mapOfAddressfromPosition['postalCode'].toString()} ${mapOfAddressfromPosition['city'].toString()}';
-    //   }
-    // } else {
-    //   print('Error fetching address: ${_logData.response.toString()}');
-    // }
-    addressController.text = await _locationProvider.getNearbyLocation({
+      print(
+          'Current Position: Lat: ${_currentPosition.latitude}, Lng: ${_currentPosition.longitude}');
+      // You can use _currentPosition to update locationController if needed
+      _logData = await _locationProvider.getAddressLocationLogData({
+        'lat': _currentPosition.latitude,
+        'lng': _currentPosition.longitude
+      });
+      // Handle _logData as needed in add Mode
+      if (isEditMode.isFalse && _logData.status == 200) {
+        Map<String, dynamic> mapOfAddressfromPosition =
+            _logData.response['locations'][0]
+                ['address']; //get response address of position
+        if (mapOfAddressfromPosition.isNotEmpty) {
+          addressController.text =
+              '${mapOfAddressfromPosition['street'].toString()} ${mapOfAddressfromPosition['houseNumber'].toString()}, ${mapOfAddressfromPosition['postalCode'].toString()} ${mapOfAddressfromPosition['city'].toString()}';
+        }
+      } else {
+        print('Error fetching address: ${_logData.response.toString()}');
+      }
+      addressController.text = await _locationProvider.getNearbyLocation({
         'lat': _currentPosition.latitude,
         'lng': _currentPosition.longitude
       });
@@ -111,5 +119,25 @@ class AddEditController extends GetxController {
 
   void goToList() {
     Get.offAllNamed(ListPage.namedRoute);
+  }
+
+  Future<void> getDateFromDateTimePicker(BuildContext context) async {
+    DateTime? pickedDate = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2101),
+    );
+    if (pickedDate != null) {
+      String formattedDate =
+          "${pickedDate.year}-${pickedDate.month}-${pickedDate.day}";
+      dateController.text = formattedDate;
+    }
+  }
+
+  void getInitialDate() {
+    var currentDate = DateTime.now();
+    dateController.text =
+        "${currentDate.year}-${currentDate.month}-${currentDate.day}";
   }
 }

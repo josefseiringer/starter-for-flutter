@@ -29,7 +29,7 @@ class ListController extends GetxController {
 
   void onBackPressed() async {
     await _appwriteRepository.logout();
-    Get.offAllNamed(LoginPage.namedRoute);
+    Get.offAndToNamed(LoginPage.namedRoute);
     Get.snackbar(
       'Login',
       'Logged out successfully',
@@ -41,10 +41,9 @@ class ListController extends GetxController {
   void _getListFromAppwrite() async {
     try {
       isloading(true);
-      await Future.delayed(const Duration(seconds: 2));
       // Your code to fetch list from Appwrite goes here
       _logData = await _appwriteRepository.listDocuments();
-      print(_logData.response);
+      //print(_logData.response);
       if (_logData.status == 200) {
         listTankModel.clear();
         _logData.response['documents'].forEach((item) {
@@ -72,10 +71,10 @@ class ListController extends GetxController {
   }
 
   void addItem() {
-    Get.offAllNamed(AddEditPage.namedRoute);
+    Get.offAndToNamed(AddEditPage.namedRoute);
   }
 
   void editItem(ListModel item) {
-    Get.offAllNamed(AddEditPage.namedRoute, arguments: item);
+    Get.offAndToNamed(AddEditPage.namedRoute, arguments: item);
   }
 }
