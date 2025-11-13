@@ -10,6 +10,8 @@ class ListPage extends GetView<ListController> {
   @override
   Widget build(BuildContext context) {
     var listCtrl = controller;
+    var whiteOpacity70 = Colors.white.withAlpha(150);
+    var whiteOpacity90 = Colors.white.withAlpha(230);
     return PopScope(
       canPop: false,
       child: SafeArea(
@@ -44,47 +46,81 @@ class ListPage extends GetView<ListController> {
                         fit: BoxFit.cover,
                       ),
                     ),
-                    child: ListView.builder(
-                      padding: const EdgeInsets.all(18),
-                      itemCount: listCtrl.listTankModel.length,
-                      itemBuilder: (context, index) {
-                        var item = listCtrl.listTankModel[index];
-                        return Dismissible(
-                          key: Key(item.id),
-                          background: Container(
-                            color: Colors.green,
-                            alignment: Alignment.centerLeft,
-                            padding: const EdgeInsets.only(left: 24),
-                            child: const Icon(Icons.edit, color: Colors.white),
-                          ),
-                          secondaryBackground: Container(
-                            color: Colors.red,
-                            alignment: Alignment.centerRight,
-                            padding: const EdgeInsets.only(right: 24),
-                            child:
-                                const Icon(Icons.delete, color: Colors.white),
-                          ),
-                          confirmDismiss: (direction) async {
-                            if (direction == DismissDirection.startToEnd) {
-                              listCtrl.editItem(item);
-                              return false; // Nicht löschen, nur editieren
-                            } else if (direction ==  DismissDirection.endToStart) {
-                              final confirm = await showDialog<bool>(
-                                context: context,
-                                builder: (ctx) => _alertDialog(ctx),
+                    child: listCtrl.listTankModel.isEmpty
+                        ? Center(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Icons.local_gas_station_outlined,
+                                  size: 80,
+                                  color: whiteOpacity70,
+                                ),
+                                const SizedBox(height: 24),
+                                Text(
+                                  'Noch keine Tankstopps gespeichert',
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                    color: whiteOpacity90,
+                                  ),
+                                ),
+                                const SizedBox(height: 12),
+                                Text(
+                                  'Tippe auf + um den ersten Eintrag hinzuzufügen',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    color: whiteOpacity70,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ],
+                            ),
+                          )
+                        : ListView.builder(
+                            padding: const EdgeInsets.all(18),
+                            itemCount: listCtrl.listTankModel.length,
+                            itemBuilder: (context, index) {
+                              var item = listCtrl.listTankModel[index];
+                              return Dismissible(
+                                key: Key(item.id),
+                                background: Container(
+                                  color: Colors.green,
+                                  alignment: Alignment.centerLeft,
+                                  padding: const EdgeInsets.only(left: 24),
+                                  child: const Icon(Icons.edit,
+                                      color: Colors.white),
+                                ),
+                                secondaryBackground: Container(
+                                  color: Colors.red,
+                                  alignment: Alignment.centerRight,
+                                  padding: const EdgeInsets.only(right: 24),
+                                  child: const Icon(Icons.delete,
+                                      color: Colors.white),
+                                ),
+                                confirmDismiss: (direction) async {
+                                  if (direction ==
+                                      DismissDirection.startToEnd) {
+                                    listCtrl.editItem(item);
+                                    return false; // Nicht löschen, nur editieren
+                                  } else if (direction ==
+                                      DismissDirection.endToStart) {
+                                    final confirm = await showDialog<bool>(
+                                      context: context,
+                                      builder: (ctx) => _alertDialog(ctx),
+                                    );
+                                    if (confirm == true) {
+                                      listCtrl.deleteItem(item);
+                                      return true;
+                                    }
+                                    return false;
+                                  }
+                                  return false;
+                                },
+                                child: MyTankListItem(item: item),
                               );
-                              if (confirm == true) {
-                                listCtrl.deleteItem(item);
-                                return true;
-                              }
-                              return false;
-                            }
-                            return false;
-                          },
-                          child: MyTankListItem(item: item),
-                        );
-                      },
-                    ),
+                            },
+                          ),
                   );
           }),
         ),

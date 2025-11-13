@@ -1,3 +1,4 @@
+import 'package:appwrite_flutter_tank_app_101125/data/repository/appwrite_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
@@ -15,6 +16,7 @@ class AddEditController extends GetxController {
   late TextEditingController pricePerLiterController;
   late TextEditingController addressController;
   final LocationProvider _locationProvider = LocationProvider();
+  final AppwriteRepository _appwriteRepository = AppwriteRepository();
   late Position _currentPosition;
   late Log _logData;
   final tankModelItem = ListModel(
@@ -129,7 +131,7 @@ class AddEditController extends GetxController {
     );
     if (pickedDate != null) {
       String formattedDate =
-          "${pickedDate.year}-${pickedDate.month}-${pickedDate.day}";
+          "${pickedDate.year}-${pickedDate.month.toString().padLeft(2, '0')}-${pickedDate.day.toString().padLeft(2, '0')}";
       dateController.text = formattedDate;
     }
   }
@@ -137,21 +139,64 @@ class AddEditController extends GetxController {
   void getInitialDate() {
     var currentDate = DateTime.now();
     dateController.text =
-        "${currentDate.year}-${currentDate.month}-${currentDate.day}";
+        "${currentDate.year}-${currentDate.month.toString().padLeft(2, '0')}-${currentDate.day.toString().padLeft(2, '0')}";
   }
 
-  void saveOrUpdateEntry() {
+  Future<void> saveOrUpdateEntry() async {
     if (formKey.value.currentState!.validate()) {
       // Perform save or update operation
       if (isEditMode.value) {
         // Update existing entry
-        print('Updating entry...');
+        await _updateTankItem();
+        print('Updating entry... ${_logData.response.toString()}');
       } else {
         // Save new entry
-        print('Saving new entry...');
+        await _saveNewStop();
       }
       // After saving or updating, navigate back to the list view
       goToList();
     }
+  }
+
+  Future<String> _getUserId() async {
+    Map<String, dynamic> dataSession =
+        (await _appwriteRepository.getCurrentSession()).toMap();
+    print('Current Session: $dataSession');
+    return dataSession['userId'];
+  }
+
+  Future<void> _updateTankItem() async {
+    var szDate = dateController.text;
+    var odometer = odometerController.text;
+    var liters = litersController.text;
+    var pricePerLiter = pricePerLiterController.text;
+    var address = addressController.text;
+    _logData =
+        await _appwriteRepository.updateDocument(tankModelItem.value.id, {
+      'date': szDate,
+      'odometer': odometer,
+      'liters': liters,
+      'pricePerLiter': pricePerLiter,
+      'location': address,
+    });
+    print('Updating entry... ${_logData.response.toString()}');
+  }
+
+  Future<void> _saveNewStop() async {
+    var userId = await _getUserId();
+    var szDate = dateController.text;
+    var odometer = odometerController.text;
+    var liters = litersController.text;
+    var pricePerLiter = pricePerLiterController.text;
+    var address = addressController.text;
+    _logData = await _appwriteRepository.createDocument({
+      'userId': userId,
+      'date': szDate,
+      'odometer': odometer,
+      'liters': liters,
+      'pricePerLiter': pricePerLiter,
+      'location': address,
+    });
+    print('Saving new entry... ${_logData.response.toString()}');
   }
 }

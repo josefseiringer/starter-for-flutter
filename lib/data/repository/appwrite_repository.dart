@@ -120,12 +120,11 @@ class AppwriteRepository {
   }
 
   /// Erstellt ein neues Dokument.
-  Future<Log> createDocument(
-      String collectionId, Map<String, dynamic> data) async {
+  Future<Log> createDocument(Map<String, dynamic> data) async {
     try {
       final response = await _databases.createDocument(
         databaseId: appwriteDatabaseId,
-        collectionId: collectionId,
+        collectionId: appwriteUsersCollectionId,
         documentId: 'unique()',
         data: data,
       );
@@ -134,7 +133,7 @@ class AppwriteRepository {
         status: 201,
         method: "POST",
         path:
-            "/databases/$appwriteDatabaseId/collections/$collectionId/documents",
+            "/databases/$appwriteDatabaseId/collections/$appwriteUsersCollectionId/documents",
         response: {'id': response.$id},
       );
     } on AppwriteException catch (error) {
@@ -143,7 +142,7 @@ class AppwriteRepository {
         status: error.code ?? 500,
         method: "POST",
         path:
-            "/databases/$appwriteDatabaseId/collections/$collectionId/documents",
+            "/databases/$appwriteDatabaseId/collections/$appwriteUsersCollectionId/documents",
         response: {'error': error.message ?? "Unknown error"},
       );
     }
@@ -159,7 +158,7 @@ class AppwriteRepository {
         collectionId: appwriteUsersCollectionId,
         queries: ([
           Query.equal('userId', userId), 
-          Query.orderDesc( '\$createdAt'),
+          Query.orderDesc('\$createdAt'),
         ]),
       );
       return Log(
@@ -183,12 +182,11 @@ class AppwriteRepository {
   }
 
   /// Aktualisiert ein Dokument.
-  Future<Log> updateDocument(
-      String collectionId, String documentId, Map<String, dynamic> data) async {
+  Future<Log> updateDocument(String documentId, Map<String, dynamic> data) async {
     try {
       final response = await _databases.updateDocument(
         databaseId: appwriteDatabaseId,
-        collectionId: collectionId,
+        collectionId: appwriteUsersCollectionId,
         documentId: documentId,
         data: data,
       );
@@ -197,7 +195,7 @@ class AppwriteRepository {
         status: 200,
         method: "PATCH",
         path:
-            "/databases/$appwriteDatabaseId/collections/$collectionId/documents/$documentId",
+            "/databases/$appwriteDatabaseId/collections/$appwriteUsersCollectionId/documents/$documentId",
         response: response.toMap(),
       );
     } on AppwriteException catch (error) {
@@ -206,7 +204,7 @@ class AppwriteRepository {
         status: error.code ?? 500,
         method: "PATCH",
         path:
-            "/databases/$appwriteDatabaseId/collections/$collectionId/documents/$documentId",
+            "/databases/$appwriteDatabaseId/collections/$appwriteUsersCollectionId/documents/$documentId",
         response: {'error': error.message ?? "Unknown error"},
       );
     }
@@ -271,5 +269,9 @@ class AppwriteRepository {
 
   Future getCurrentUser() async {
     return await _account.get();
+  }
+
+  Future getCurrentSession() async {
+    return await _account.getSession(sessionId:'current');
   }
 }

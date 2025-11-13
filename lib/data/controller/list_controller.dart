@@ -49,7 +49,20 @@ class ListController extends GetxController {
           var dataItem = item['data'];
           listTankModel.add(ListModel.fromMap(dataItem));
         });
+
+        // Sortiere nach Datum absteigend (neueste zuerst)
+        listTankModel.sort((a, b) {
+          try {
+            final dateA = DateTime.parse(a.date);
+            final dateB = DateTime.parse(b.date);
+            return dateB.compareTo(dateA);
+          } catch (e) {
+            return 0; // Bei Parse-Fehler keine Änderung
+          }
+        });
+
         print('List fetched: ${listTankModel.length} items');
+
         var currentUser = await _appwriteRepository.getCurrentUser();
         userName(currentUser.name ?? 'No Name');
       } else {
