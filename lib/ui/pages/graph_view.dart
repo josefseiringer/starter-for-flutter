@@ -70,14 +70,14 @@ class GraphPage extends GetView<GraphController> {
                       ChartDescription(
                         backgroundColor: kColorEuroChart,
                         mnWidth: double.infinity,
-                        szDescText: '€ Jahressumme',
+                        szDescText: '€ Summe/J',
                         szCurrentSumData:
                             graphCtrl.mnCurrentSummEuroYear.toStringAsFixed(2),
                       ),
                       ChartDescription(
                         backgroundColor: kColorBenzinChart,
                         mnWidth: double.infinity,
-                        szDescText: 'L Jahresverbrauch',
+                        szDescText: 'L Verbrauch/J',
                         szCurrentSumData:
                             graphCtrl.mnCurrentSummLiterYear.toStringAsFixed(2),
                       ),
@@ -105,7 +105,7 @@ class GraphPage extends GetView<GraphController> {
                   child: ChartDescription(
                     backgroundColor: kColorPerLiterChart,
                     mnWidth: queryDisplaySize.width,
-                    szDescText: '€/L Durchschnitt',
+                    szDescText: '€/L Durchs.',
                     szCurrentSumData: graphCtrl.mnCurrentAveragePerLiter.value
                         .toStringAsFixed(2),
                   ),
