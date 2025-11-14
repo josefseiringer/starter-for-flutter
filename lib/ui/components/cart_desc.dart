@@ -32,7 +32,7 @@ class ChartDescription extends StatelessWidget {
               color: backgroundColor,
               borderRadius: BorderRadius.circular(15),
             ),
-            width: 80,
+            width: 100,
             height: 30,
             child: Center(
               child: Text(szCurrentSumData, style: kChartDescriptionFontStyle),
