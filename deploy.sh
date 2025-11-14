@@ -17,7 +17,7 @@ docker rm flutter-tanken-app 2>/dev/null || true
 echo "▶️  Starting new container..."
 docker run -d \
   --name flutter-tanken-app \
-  -p 8080:80 \
+  -p 8080:8088 \
   --restart unless-stopped \
   flutter-tanken-app:latest
 

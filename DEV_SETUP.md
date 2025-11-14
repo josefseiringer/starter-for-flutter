@@ -16,7 +16,7 @@ Erstelle/bearbeite `.env` im Projekt-Root:
 
 ```env
 PTV_API_KEY=dein_ptv_api_schluessel
-PTV_PROXY_BASE=http://localhost:8010
+PTV_PROXY_BASE=http://localhost:8088
 ```
 
 #### 2. CORS Proxy starten

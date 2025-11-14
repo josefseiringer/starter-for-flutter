@@ -20,7 +20,7 @@ docker rm flutter-tanken-app 2>$null
 Write-Host "▶️  Starting new container..." -ForegroundColor Yellow
 docker run -d `
   --name flutter-tanken-app `
-  -p 8080:80 `
+  -p 8088:8088 `
   --restart unless-stopped `
   flutter-tanken-app:latest
 

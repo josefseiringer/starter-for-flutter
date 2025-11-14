@@ -16,8 +16,7 @@
 
 **Linux/Mac:**
 ```bash
-chmod +x deploy.sh
-./deploy.sh
+sed -i 's/\r$//' deploy.sh && chmod +x deploy.sh && ./deploy.sh
 ```
 
 ### Option 2: Mit Docker Compose
@@ -33,14 +32,14 @@ docker-compose up -d --build
 docker build -t flutter-tanken-app:latest .
 
 # Run
-docker run -d --name flutter-tanken-app -p 8080:80 flutter-tanken-app:latest
+docker run -d --name flutter-tanken-app -p 8080:8088 flutter-tanken-app:latest
 ```
 
 ## 🌐 Zugriff
 
 Nach dem Deployment ist die App erreichbar unter:
-- **Lokal**: http://localhost:8080
-- **Server**: http://YOUR_SERVER_IP:8080
+- **Lokal**: http://localhost:8088
+- **Server**: http://YOUR_SERVER_IP:8088
 
 ## 🔧 Konfiguration
 
@@ -49,12 +48,12 @@ Nach dem Deployment ist die App erreichbar unter:
 **docker-compose.yml:**
 ```yaml
 ports:
-  - "3000:80"  # Ändere 3000 zum gewünschten Port
+  - "3000:3000"  # Ändere 3000 zum gewünschten Port
 ```
 
 **Oder beim manuellen Run:**
 ```bash
-docker run -d -p 3000:80 flutter-tanken-app:latest
+docker run -d -p 3000:3000 flutter-tanken-app:latest
 ```
 
 ### Umgebungsvariablen
@@ -109,7 +108,7 @@ docker push YOUR_DOCKERHUB_USER/flutter-tanken-app:latest
 
 ```bash
 docker pull YOUR_DOCKERHUB_USER/flutter-tanken-app:latest
-docker run -d -p 80:80 --restart always YOUR_DOCKERHUB_USER/flutter-tanken-app:latest
+docker run -d -p 8088:8088 --restart always YOUR_DOCKERHUB_USER/flutter-tanken-app:latest
 ```
 
 ### 3. Mit Domain und HTTPS (nginx-proxy + Let's Encrypt)
@@ -141,7 +140,7 @@ docker logs flutter-tanken-app
 ### Port bereits belegt
 ```bash
 # Anderen Port verwenden
-docker run -d -p 8081:80 flutter-tanken-app:latest
+docker run -d -p 8089:8088 flutter-tanken-app:latest
 ```
 
 ### Build-Fehler

@@ -25,10 +25,10 @@ COPY --from=build /app/server .
 COPY --from=build /app/.env .
 
 # Expose port
-EXPOSE 8080
+EXPOSE 8088
 
 # Set environment
-ENV PORT=8080
+ENV PORT=8088
 ENV HOST=0.0.0.0
 
 # Run server

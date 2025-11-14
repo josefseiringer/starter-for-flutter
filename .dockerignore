@@ -16,13 +16,19 @@ build/
 .git/
 .gitignore
 
-# Other
+# Logs
 *.log
-*.md
-README.md
-.env
 
-# Platform specific
+# Documentation (außer wichtige)
+*.md
+!README.md
+
+# Environment (wird separat behandelt)
+.env
+.env.*
+!.env.example
+
+# Platform specific (nicht für Web benötigt)
 android/
 ios/
 linux/
@@ -31,5 +37,23 @@ windows/
 
 # Tests
 test/
+integration_test/
 .test_coverage/
 coverage/
+
+# Backend Proxy (separates Image)
+backend_proxy/
+
+# Development tools
+cors_proxy.dart
+start-proxy.bat
+*.bat
+*.sh
+!deploy.sh
+
+# OS files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~

@@ -29,7 +29,7 @@ class LocationProvider {
       // Check if using production backend proxy (has /api/geocode endpoint)
       // or development CORS proxy (forwards to PTV path structure)
       final useBackendProxy =
-          proxyBase.contains('8080') || !proxyBase.contains('localhost:8010');
+          proxyBase.contains('8088') && !proxyBase.contains('/locations');
 
       final fullUrl = useBackendProxy
           ? '$cleanBase/api/geocode?lat=$lat&lng=$lng&language=de'

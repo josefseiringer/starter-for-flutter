@@ -33,7 +33,7 @@ Bearbeite `.env`:
 
 ```env
 PTV_API_KEY=dein_ptv_api_key
-PORT=8080
+PORT=8088
 HOST=0.0.0.0
 ```
 
@@ -119,7 +119,7 @@ FROM scratch
 COPY --from=build /runtime/ /
 COPY --from=build /app/server /app/
 COPY --from=build /app/.env /app/
-EXPOSE 8080
+EXPOSE 8088
 CMD ["/app/server"]
 ```
 

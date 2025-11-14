@@ -16,7 +16,7 @@ void main(List<String> args) async {
     exit(1);
   }
 
-  final port = int.tryParse(env['PORT'] ?? '8080') ?? 8080;
+  final port = int.tryParse(env['PORT'] ?? '8088') ?? 8088;
   final host = env['HOST'] ?? '0.0.0.0';
 
   // Router configuration
