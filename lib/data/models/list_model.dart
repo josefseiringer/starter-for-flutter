@@ -15,6 +15,8 @@ class ListModel {
   final double liters;
   final double pricePerLiter;
   final String location;
+  int? mnIndexCount;
+  String? szSummePreis;
 
   ListModel({
     required this.id,
@@ -24,7 +26,9 @@ class ListModel {
     required this.liters,
     required this.pricePerLiter,
     required this.location,
-  });
+  }):szSummePreis = (liters != 0.0 && pricePerLiter != 0.0)
+        ? (liters * pricePerLiter).toStringAsFixed(2)
+        : null;
 
   factory ListModel.fromMap(Map<String, dynamic> map) {
     return ListModel(

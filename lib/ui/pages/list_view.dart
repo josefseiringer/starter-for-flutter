@@ -27,6 +27,12 @@ class ListPage extends GetView<ListController> {
               () => Text('Tankstopps, ${listCtrl.userName.value}'),
             ),
             centerTitle: true,
+            actions: [
+              IconButton(
+                onPressed: () => listCtrl.goToChartView(),
+                icon: const Icon(Icons.show_chart),
+              ),
+            ],
           ),
           floatingActionButton: FloatingActionButton(
             onPressed: () => listCtrl.addItem(),
