@@ -1,0 +1,35 @@
+# Build outputs
+build/
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+
+# IDE
+.idea/
+.vscode/
+*.iml
+*.ipr
+*.iws
+
+# Git
+.git/
+.gitignore
+
+# Other
+*.log
+*.md
+README.md
+.env
+
+# Platform specific
+android/
+ios/
+linux/
+macos/
+windows/
+
+# Tests
+test/
+.test_coverage/
+coverage/
