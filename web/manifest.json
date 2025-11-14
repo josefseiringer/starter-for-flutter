@@ -1,11 +1,11 @@
 {
-    "name": "AppwriteStarterKit",
-    "short_name": "AppwriteStarterKit",
+    "name": "Tank App",
+    "short_name": "Tank App",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "Appwrite StarterKit in Flutter.",
+    "description": "Tank App - Flutter Application.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

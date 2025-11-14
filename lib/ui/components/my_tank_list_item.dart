@@ -56,6 +56,10 @@ class MyTankListItem extends StatelessWidget {
               'Ort: ${item.location}',
               style: subText,
             ),
+            Text(
+              'Summe: ${item.szSummePreis} €',
+              style: subText,
+            ),
           ],
         ),
       ),
