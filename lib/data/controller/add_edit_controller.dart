@@ -119,7 +119,7 @@ class AddEditController extends GetxController {
   }
 
   void goToList() {
-    Get.offAllNamed(ListPage.namedRoute);
+    Get.offAndToNamed(ListPage.namedRoute);
   }
 
   Future<void> getDateFromDateTimePicker(BuildContext context) async {

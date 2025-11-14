@@ -1,8 +1,8 @@
-import 'package:appwrite_flutter_tank_app_101125/ui/pages/graph_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../models/list_model.dart';
 import '../models/log.dart';
+import '../../ui/pages/graph_view.dart';
 import '../../ui/pages/add_edit_view.dart';
 import '../../ui/pages/login_view.dart';
 import '../../data/repository/appwrite_repository.dart';

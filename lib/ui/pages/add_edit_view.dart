@@ -97,7 +97,7 @@ class AddEditPage extends GetView<AddEditController> {
                           labelText: 'Liter',
                           border: OutlineInputBorder(),
                         ),
-                        keyboardType: TextInputType.number,
+                        //keyboardType: TextInputType.number,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'Bitte Liter eingeben';
@@ -115,7 +115,7 @@ class AddEditPage extends GetView<AddEditController> {
                           labelText: 'Preis pro Liter',
                           border: OutlineInputBorder(),
                         ),
-                        keyboardType: TextInputType.number,
+                        //keyboardType: TextInputType.number,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'Bitte Preis pro Liter eingeben';
