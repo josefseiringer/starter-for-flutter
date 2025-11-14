@@ -1,8 +1,0 @@
-analyzer:
-  errors:
-    avoid_print: ignore
-include: package:lints/recommended.yaml
-
-linter:
-  rules:
-    - avoid_print

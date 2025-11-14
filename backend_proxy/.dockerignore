@@ -1,8 +1,0 @@
-.dart_tool/
-.packages
-pubspec.lock
-*.log
-.env
-.git/
-.gitignore
-README.md

@@ -1,9 +1,9 @@
 
-import 'package:appwrite_flutter_tank_app_101125/ui/pages/login_view.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 
 import '../utils/sample_routes.dart';
+import '../../ui/pages/login_view.dart';
 
 class AppwriteApp extends StatelessWidget {
   const AppwriteApp({super.key});
