@@ -32,6 +32,10 @@ class ListPage extends GetView<ListController> {
                 onPressed: () => listCtrl.goToChartView(),
                 icon: const Icon(Icons.show_chart),
               ),
+              IconButton(
+                onPressed: () => listCtrl.goToSpritView(),
+                icon: const Icon(Icons.local_gas_station),
+              ),
             ],
           ),
           floatingActionButton: FloatingActionButton(

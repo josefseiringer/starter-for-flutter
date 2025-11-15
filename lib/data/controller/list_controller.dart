@@ -1,3 +1,4 @@
+import 'package:appwrite_flutter_tank_app_101125/ui/pages/sprit_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../models/list_model.dart';
@@ -93,5 +94,9 @@ class ListController extends GetxController {
 
   void goToChartView() {
     Get.offAndToNamed(GraphPage.namedRoute);
+  }
+
+  void goToSpritView() {
+    Get.offAndToNamed(SpritPage.namedRoute);
   }
 }
