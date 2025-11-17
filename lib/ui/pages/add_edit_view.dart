@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../data/controller/add_edit_controller.dart';
+import '../components/my_text_form_field.dart';
 
 class AddEditPage extends GetView<AddEditController> {
   static const String namedRoute = '/add-edit-page';
@@ -55,16 +56,14 @@ class AddEditPage extends GetView<AddEditController> {
                     children: [
                       SizedBox(height: 20),
                       // Add your form fields here
-                      TextFormField(
+                      MyTextFormField(
+                        editCtrl: editCtrl,
                         readOnly: true,
                         onTap: () async {
                           editCtrl.getDateFromDateTimePicker(context);
                         },
                         controller: editCtrl.dateController,
-                        decoration: const InputDecoration(
-                          labelText: 'Datum',
-                          border: OutlineInputBorder(),
-                        ),
+                        labelText: 'Datum',
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'Bitte Datum eingeben';
@@ -73,12 +72,10 @@ class AddEditPage extends GetView<AddEditController> {
                         },
                       ),
                       SizedBox(height: 20),
-                      TextFormField(
+                      MyTextFormField(
+                        editCtrl: editCtrl,
                         controller: editCtrl.odometerController,
-                        decoration: const InputDecoration(
-                          labelText: 'Kilometerstand',
-                          border: OutlineInputBorder(),
-                        ),
+                        labelText: 'Kilometerstand',
                         keyboardType: TextInputType.number,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
@@ -91,12 +88,10 @@ class AddEditPage extends GetView<AddEditController> {
                         },
                       ),
                       SizedBox(height: 20),
-                      TextFormField(
+                      MyTextFormField(
+                        editCtrl: editCtrl,
                         controller: editCtrl.litersController,
-                        decoration: const InputDecoration(
-                          labelText: 'Liter',
-                          border: OutlineInputBorder(),
-                        ),
+                        labelText: 'Liter',
                         onChanged: (value) => editCtrl.calculateSummePreis(),
                         //keyboardType: TextInputType.number,
                         validator: (value) {
@@ -110,12 +105,10 @@ class AddEditPage extends GetView<AddEditController> {
                         },
                       ),
                       SizedBox(height: 20),
-                      TextFormField(
+                      MyTextFormField(
+                        editCtrl: editCtrl,
                         controller: editCtrl.pricePerLiterController,
-                        decoration: const InputDecoration(
-                          labelText: 'Preis pro Liter',
-                          border: OutlineInputBorder(),
-                        ),
+                        labelText: 'Preis pro Liter',
                         onChanged: (value) => editCtrl.calculateSummePreis(),
                         //keyboardType: TextInputType.number,
                         validator: (value) {
@@ -129,12 +122,10 @@ class AddEditPage extends GetView<AddEditController> {
                         },
                       ),
                       SizedBox(height: 20),
-                      TextFormField(
+                      MyTextFormField(
+                        editCtrl: editCtrl,
                         controller: editCtrl.addressController,
-                        decoration: const InputDecoration(
-                          labelText: 'Adresse',
-                          border: OutlineInputBorder(),
-                        ),
+                        labelText: 'Adresse',
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'Bitte Adresse eingeben';
@@ -144,19 +135,11 @@ class AddEditPage extends GetView<AddEditController> {
                       ),
                       // Summe Preis Field
                       SizedBox(height: 20),
-                      TextFormField(
+                      MyTextFormField(
+                        editCtrl: editCtrl,
                         readOnly: true,
                         controller: editCtrl.summeController,
-                        decoration: const InputDecoration(
-                          labelText: 'Summe Preis',
-                          border: OutlineInputBorder(),
-                        ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Summe wird automatisch berechnet';
-                          }
-                          return null;
-                        },
+                        labelText: 'Summe Preis',
                       ),
                       SizedBox(height: 40),
                       // Button save Update
@@ -180,3 +163,5 @@ class AddEditPage extends GetView<AddEditController> {
     );
   }
 }
+
+
