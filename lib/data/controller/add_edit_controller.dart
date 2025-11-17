@@ -15,6 +15,7 @@ class AddEditController extends GetxController {
   late TextEditingController litersController;
   late TextEditingController pricePerLiterController;
   late TextEditingController addressController;
+  late TextEditingController summeController;
   final LocationProvider _locationProvider = LocationProvider();
   final AppwriteRepository _appwriteRepository = AppwriteRepository();
   late Position _currentPosition;
@@ -45,6 +46,7 @@ class AddEditController extends GetxController {
       litersController = TextEditingController();
       pricePerLiterController = TextEditingController();
       addressController = TextEditingController();
+      summeController = TextEditingController();
       getInitialDate();
       _getLocation();
     }
@@ -63,6 +65,7 @@ class AddEditController extends GetxController {
     litersController.dispose();
     pricePerLiterController.dispose();
     addressController.dispose();
+    summeController.dispose();
   }
 
   clearTextFields() {
@@ -116,6 +119,7 @@ class AddEditController extends GetxController {
         text: tankModelItem.value.pricePerLiter.toString());
     addressController =
         TextEditingController(text: tankModelItem.value.location);
+    summeController = TextEditingController(text: tankModelItem.value.szSummePreis);
   }
 
   void goToList() {
@@ -199,4 +203,12 @@ class AddEditController extends GetxController {
     });
     print('Saving new entry... ${_logData.response.toString()}');
   }
+
+  void calculateSummePreis() {
+    double liters = double.tryParse(litersController.text) ?? 0.0;
+    double pricePerLiter = double.tryParse(pricePerLiterController.text) ?? 0.0;
+    double summePreis = liters * pricePerLiter;
+    summeController.text = summePreis.toStringAsFixed(2);
+  }
+  
 }

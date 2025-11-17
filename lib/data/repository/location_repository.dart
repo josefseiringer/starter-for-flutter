@@ -32,7 +32,7 @@ class LocationProvider {
           proxyBase.contains('8088') && !proxyBase.contains('/locations');
 
       final fullUrl = useBackendProxy
-          ? '$cleanBase/api/geocode?lat=$lat&lng=$lng&language=de'
+          ? '$cleanBase/locations/by-position/$lat/$lng?language=de&apiKey=$apiKey'
           : '$cleanBase/locations/by-position/$lat/$lng?language=de&apiKey=$apiKey';
 
       debugPrint('Building proxy URL: $fullUrl');

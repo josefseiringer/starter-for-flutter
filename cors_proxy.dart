@@ -8,7 +8,7 @@ import 'dart:io';
 import 'package:http/http.dart' as http;
 
 void main() async {
-  final port = 8088;
+  final port = 8010;
   final targetBase = 'https://api.myptv.com/geocoding/v1';
 
   final server = await HttpServer.bind(InternetAddress.loopbackIPv4, port);

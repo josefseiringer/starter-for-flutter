@@ -97,6 +97,7 @@ class AddEditPage extends GetView<AddEditController> {
                           labelText: 'Liter',
                           border: OutlineInputBorder(),
                         ),
+                        onChanged: (value) => editCtrl.calculateSummePreis(),
                         //keyboardType: TextInputType.number,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
@@ -115,6 +116,7 @@ class AddEditPage extends GetView<AddEditController> {
                           labelText: 'Preis pro Liter',
                           border: OutlineInputBorder(),
                         ),
+                        onChanged: (value) => editCtrl.calculateSummePreis(),
                         //keyboardType: TextInputType.number,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
@@ -136,6 +138,22 @@ class AddEditPage extends GetView<AddEditController> {
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'Bitte Adresse eingeben';
+                          }
+                          return null;
+                        },
+                      ),
+                      // Summe Preis Field
+                      SizedBox(height: 20),
+                      TextFormField(
+                        readOnly: true,
+                        controller: editCtrl.summeController,
+                        decoration: const InputDecoration(
+                          labelText: 'Summe Preis',
+                          border: OutlineInputBorder(),
+                        ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Summe wird automatisch berechnet';
                           }
                           return null;
                         },
