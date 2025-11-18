@@ -1,69 +1,202 @@
-# Flutter Starter Kit with Appwrite
+# Flutter Tank App with Appwrite
 
-Kickstart your Flutter development with this ready-to-use starter project integrated
-with [Appwrite](https://appwrite.io).
+Eine Flutter-basierte Tankstellen-App mit Appwrite Backend-Integration, E-Control API für Kraftstoffpreise und Navigation zu Tankstellen.
 
-This guide will help you quickly set up, customize, and build your Flutter app.
+Diese Anleitung hilft Ihnen, die Tank App schnell zu konfigurieren und zu verwenden.
 
 ---
 
-## 🚀 Getting Started
+## 🚀 Erste Schritte
 
-### Clone the Project
+### Projekt klonen
 
-Clone this repository to your local machine using Git or directly from `Android Studio`:
+Klonen Sie dieses Repository auf Ihren lokalen Rechner:
 
 ```bash
-git clone https://github.com/appwrite/starter-for-flutter
+git clone https://github.com/josefseiringer/starter-for-flutter
 ```
 
-Alternatively, open the repository URL in `Android Studio` to clone it directly.
-
 ---
 
-## 🛠️ Development Guide
+## ⚙️ Konfiguration
 
-1. **Configure Appwrite**  
-   Open `lib/config/environment.dart` and update the values with your Appwrite project credentials:
-   
-- Copy .env_example to .env and replace with your Appwrite Server Credentials to connect to your Database/Collection in appwrite
-   
+### 1. **Settings-Datei konfigurieren**  
 
-2. **Customize as Needed**  
-   Modify the starter kit to suit your app's requirements. Adjust UI, features, or backend
-   integrations as per your needs.
+Die App verwendet jetzt eine `settings.ini` Datei anstelle von `.env`:
 
-3. **Run the App**  
-   Select a target device and run the app:
+1. Navigieren Sie zum `assets/` Ordner
+2. Benennen Sie `settings_example.ini` in `settings.ini` um:
    ```bash
-   # List available devices
-   flutter devices
-   
-   # Run on a specific device (replace 'device-id' with actual device)
-   flutter run -d device-id
-   
-   # Examples:
-   flutter run -d chrome          # Web
-   flutter run -d "iPhone 15"     # iOS Simulator
-   flutter run -d emulator-5554   # Android Emulator
-   flutter run -d macos           # macOS Desktop
+   cd assets/
+   mv settings_example.ini settings.ini
    ```
 
-   **Build for Web:**
-   ```bash
-   flutter build web
-   ```
+3. Öffnen Sie `assets/settings.ini` und ersetzen Sie die Platzhalter mit Ihren echten Werten:
+
+```ini
+[appwrite]
+public_endpoint = <Ihre Appwrite Endpoint URL>
+project_id = <Ihre Appwrite Projekt ID>
+project_name = <Ihr Projektname>
+database_id = <Ihre Database ID>
+users_collection_id = <Ihre Users Collection ID>
+
+[ptv]
+api_key = <Ihr PTV API Schlüssel>
+proxy_base = http://localhost:8010
+
+[econtrol]
+link = https://api.e-control.at/sprit/1.0/search/gas-stations/by-address
+```
+
+**Wichtig:** Die `settings.ini` Datei ist erforderlich, damit die App funktioniert!
 
 ---
 
-## 📦 Building for Production
+## 🛠️ Entwicklungsanleitung
 
-Follow the official Flutter guide on deploying an app to
-production : https://docs.flutter.dev/deployment
+### 2. **Abhängigkeiten installieren**
+```bash
+flutter pub get
+```
+
+### 3. **App ausführen**
+Wählen Sie ein Zielgerät und starten Sie die App:
+
+```bash
+# Verfügbare Geräte anzeigen
+flutter devices
+
+# App auf einem bestimmten Gerät ausführen
+flutter run -d device-id
+
+# Beispiele:
+flutter run -d chrome                           # Web
+flutter run -d "iPhone von Josef"               # iOS Gerät
+flutter run -d 00008140-000604E00261801C        # iPhone (Device ID)
+flutter run -d emulator-5554                    # Android Emulator
+flutter run -d macos                            # macOS Desktop
+
+# Profile-Modus für Performance-Analyse
+flutter run --profile -d 00008140-000604E00261801C # <-- mit UID des Iphones
+flutter run --profile # <-- ohne UID
+```
 
 ---
 
-## 💡 Additional Notes
+## 📱 App-Features
 
-- This starter project is designed to streamline your Flutter development with Appwrite.
-- Refer to the [Appwrite Documentation](https://appwrite.io/docs) for detailed integration guidance.
+### ⛽ **Tank-Funktionalität:**
+- **Tankstellen-Finder**: Top 5 Tankstellen in der Nähe
+- **Kraftstoffpreise**: Aktuelle Diesel/Super Preise via E-Control API
+- **Navigation**: Direkte Weiterleitung zu Apple Maps/Google Maps
+- **Tankstopps verwalten**: Eigene Tankstopps speichern und verwalten
+
+### 🗺️ **Navigation:**
+- iOS: Apple Maps Integration
+- Android: Google Maps Integration
+- Web/Desktop: Google Maps im Browser
+
+### 📊 **Daten-Management:**
+- Appwrite Backend-Integration
+- Lokale und Cloud-Datenspeicherung
+- Benutzerauthentifizierung
+
+---
+
+## 🏗️ Produktions-Build
+
+### iOS Build:
+```bash
+# Profile-Build für Debugging
+flutter build ios --profile
+
+# Release-Build für App Store
+flutter build ios --release
+```
+
+### Android Build:
+```bash
+flutter build apk --release
+```
+
+### Web Build:
+```bash
+flutter build web
+```
+
+---
+
+## 🔧 Technische Details
+
+### **Architektur:**
+- **State Management**: GetX
+- **Backend**: Appwrite
+- **API Integration**: E-Control (Kraftstoffpreise)
+- **Maps**: url_launcher für plattformspezifische Navigation
+- **Konfiguration**: INI-basierte Settings
+
+### **Ordnerstruktur:**
+```
+lib/
+├── config/
+│   ├── settings_service.dart    # INI-Konfiguration
+│   └── environment.dart         # Environment-Wrapper
+├── data/
+│   ├── controller/              # GetX Controller
+│   ├── models/                  # Datenmodelle
+│   └── repository/              # API-Repositories
+└── ui/
+    ├── components/              # UI-Komponenten
+    └── pages/                   # App-Seiten
+
+assets/
+├── settings.ini                 # Haupt-Konfiguration
+└── settings_example.ini         # Beispiel-Konfiguration
+```
+
+---
+
+## 🍎 iOS Deployment
+
+### **Provisioning Profile:**
+- **Kostenloser Account**: 7 Tage Gültigkeit
+- **Paid Developer Account**: 1 Jahr Gültigkeit
+
+### **Installation auf iPhone:**
+1. iPhone per USB verbinden
+2. `flutter run --profile -d [device-id]` ausführen
+3. App ist als native iOS-App installiert
+
+---
+
+## 💡 Zusätzliche Hinweise
+
+- **Erstmalige Einrichtung**: `settings.ini` muss korrekt konfiguriert sein
+- **API-Schlüssel**: E-Control API erfordert keine Authentifizierung
+- **PTV API**: Optional für erweiterte Standortdienste
+- **Appwrite**: Für Benutzerauthentifizierung und Datenspeicherung
+
+Weitere Details zur Appwrite-Integration finden Sie in der [Appwrite Dokumentation](https://appwrite.io/docs).
+
+---
+
+## 🆘 Fehlerbehebung
+
+### Häufige Probleme:
+
+1. **"settings.ini not found"**: 
+   - Stellen Sie sicher, dass `settings_example.ini` zu `settings.ini` umbenannt wurde
+
+2. **"Network connection error"**: 
+   - Überprüfen Sie die Appwrite Endpoint-URL in der `settings.ini`
+
+3. **"Module device_info_plus not found"**: 
+   - Führen Sie `flutter clean && flutter pub get` aus
+
+4. **iOS Provisioning abgelaufen**: 
+   - Führen Sie `flutter run` erneut aus (kostenloser Account)
+
+---
+
+**🚗 Viel Spaß mit Ihrer Tank App! ⛽**
