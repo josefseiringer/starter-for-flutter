@@ -4,7 +4,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:window_manager/window_manager.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
+//import 'package:flutter_dotenv/flutter_dotenv.dart';
+
+import '../config/settings_service.dart';
 
 //import 'http_override.dart';
 
@@ -22,7 +24,14 @@ class AppInitializer {
     _ensureInitialized();
     await _setupWindowDimensions();
     await _setupDeviceOrientation();
-    await dotenv.load(fileName: ".env");
+    //await dotenv.load(fileName: ".env");
+    // Settings beim App-Start laden
+  try {
+    await SettingsService.loadSettings();
+    print('Settings erfolgreich geladen');
+  } catch (e) {
+    print('Fehler beim Laden der Settings: $e');
+  }
     //HttpOverrides.global = MyHttpOverrides();
   }
 

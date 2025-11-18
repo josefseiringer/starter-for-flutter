@@ -1,11 +1,11 @@
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 
+import '../../config/environment.dart';
 import '../models/log.dart';
 
 class LocationProvider {
@@ -14,7 +14,7 @@ class LocationProvider {
     required String lng,
     required String apiKey,
   }) {
-    final proxyBase = dotenv.get('PTV_PROXY_BASE', fallback: '');
+    final proxyBase = Environment.ptvProxyBase;
     final useProxy = kIsWeb && proxyBase.trim().isNotEmpty;
 
     if (useProxy) {
@@ -87,7 +87,7 @@ class LocationProvider {
 
   Future<Log> getAddressLocationLogData(Map map) async {
     Map<String, dynamic> data = {};
-    String kPtvApiKey = dotenv.get('PTV_API_KEY');
+    String kPtvApiKey = Environment.ptvApiKey;
     var lat = map['lat'].toString();
     var lng = map['lng'].toString();
     final uri = _buildPtvUri(lat: lat, lng: lng, apiKey: kPtvApiKey);
@@ -171,7 +171,7 @@ class LocationProvider {
   }
 
   Future<String> getNearbyLocation(Map map) async {
-    String kPtvApiKey = dotenv.get('PTV_API_KEY');
+    String kPtvApiKey = Environment.ptvApiKey;
     String locationOrt = '?';
     var lat = map['lat'];
     var lng = map['lng'];

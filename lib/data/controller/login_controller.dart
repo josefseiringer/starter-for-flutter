@@ -36,7 +36,7 @@ class LoginController extends GetxController {
   }
 
   void signUp() async {
-    _checkInput();
+    if (!_checkInput()) return; // Beende bei ungültigen Eingaben
     var email = emailController.text.trim();
     var password = passwordController.text.trim();
     var name = nameController.text.trim();
@@ -56,7 +56,7 @@ class LoginController extends GetxController {
   }
 
   void login() async {
-    _checkInput();
+    if (!_checkInput()) return; // Beende bei ungültigen Eingaben
     
     // Zeige Loading-Indicator
     Get.dialog(
@@ -73,23 +73,34 @@ class LoginController extends GetxController {
       // Schließe Loading-Dialog
       Get.back();
       
-      szUserId(result['userId']);
-      if(_logData.status != 200){
+      // Erfolgreicher Login
+      if(_logData.status == 200){
+        szUserId(result['userId']);
+        //go to HomePage and Display List data
+        await Get.offAndToNamed(ListPage.namedRoute);
+        _clearInputFields();
+      } else {
+        // Login-Fehler (falsche Credentials, etc.)
         print('Login failed: ${result['error']}');
         Get.snackbar('Error', 'Login failed: ${result['error']}',
             backgroundColor: const Color.fromARGB(255, 255, 0, 0),
             colorText: const Color.fromRGBO(255, 255, 255, 1),
             duration: const Duration(seconds: 5));
-        return;
       }
-      //go to HomePage and Display List data
-      await Get.offAndToNamed(ListPage.namedRoute);
-      _clearInputFields();
     } catch (e) {
       // Schließe Loading-Dialog bei Fehler
       Get.back();
       print('Login exception: $e');
-      Get.snackbar('Error', 'Connection failed. Please check your network.',
+      
+      // Spezifischere Fehlerbehandlung
+      String errorMessage;
+      if (e.toString().contains('network') || e.toString().contains('connection')) {
+        errorMessage = 'Connection failed. Please check your network.';
+      } else {
+        errorMessage = 'Login failed. Please try again.';
+      }
+      
+      Get.snackbar('Error', errorMessage,
           backgroundColor: const Color.fromARGB(255, 255, 0, 0),
           colorText: const Color.fromRGBO(255, 255, 255, 1),
           duration: const Duration(seconds: 5));
@@ -106,25 +117,26 @@ class LoginController extends GetxController {
         colorText: const Color.fromRGBO(255, 255, 255, 1));
   }
 
-  void _checkInput() {
+  bool _checkInput() {
     if (emailController.text.isEmpty) {
       Get.snackbar('Error', 'Please enter your email',
           backgroundColor: const Color.fromARGB(255, 255, 0, 0),
           colorText: const Color.fromRGBO(255, 255, 255, 1));
-      return;
+      return false;
     }
     if (passwordController.text.isEmpty) {
       Get.snackbar('Error', 'Please enter your password',
           backgroundColor: const Color.fromARGB(255, 255, 0, 0),
           colorText: const Color.fromRGBO(255, 255, 255, 1));
-      return;
+      return false;
     }
     if (isSignIn.value && nameController.text.isEmpty) {
       Get.snackbar('Error', 'Please enter your name',
           backgroundColor: const Color.fromARGB(255, 255, 0, 0),
           colorText: const Color.fromRGBO(255, 255, 255, 1));
-      return;
+      return false;
     }
+    return true;
   }
 
   void _clearInputFields() {

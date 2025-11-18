@@ -1,10 +1,10 @@
 import 'dart:convert';
 
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
 
 import '../models/log.dart';
+import '../../config/environment.dart';
 import '../../data/repository/location_repository.dart';
 
 class GasRepository {
@@ -18,7 +18,7 @@ class GasRepository {
         var latitude = position.latitude;
         var longitude = position.longitude;
         var fuelType = s; // 'DIE' or 'SUP'
-        var gasUrl = dotenv.env['E_CONTROL_LINK'];
+        var gasUrl = Environment.eControlLink;
         pingPath =
             '$gasUrl?latitude=$latitude&longitude=$longitude&fuelType=$fuelType&includeClosed=false';
         // Implementation for switching gas type in the repository

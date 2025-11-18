@@ -1,16 +1,15 @@
-import 'package:flutter_dotenv/flutter_dotenv.dart';
+import '../config/settings_service.dart';
 
 class Environment {
-  static final String endpoint = dotenv.get('APPWRITE_PUBLIC_ENDPOINT', fallback: '');
-  static final String projectId = dotenv.get('APPWRITE_PROJECT_ID', fallback: '');
-  static final String projectName = dotenv.get('APPWRITE_PROJECT_NAME', fallback: '');
-  static final String databaseId = dotenv.get('APPWRITE_DATABASE_ID', fallback: '');
-  static final String usersCollectionId = dotenv.get('APPWRITE_USERS_COLLECTION_ID', fallback: '');
-  
-  static final String appwritePublicEndpoint = endpoint;
-  static final String appwriteProjectId = projectId;
-  static final String appwriteProjectName = projectName;
-  static final String appwriteDatabaseId = databaseId;
-  static final String appwriteUsersCollectionId = usersCollectionId;
-
+  static String get appwritePublicEndpoint => SettingsService.appwriteEndpoint ?? '';
+  static String get appwriteProjectId => SettingsService.appwriteProjectId ?? '';
+  static String get appwriteProjectName => SettingsService.appwriteProjectName ?? '';
+  static String get appwriteDatabaseId => SettingsService.appwriteDatabaseId ?? '';
+  static String get appwriteUsersCollectionId => SettingsService.appwriteUsersCollectionId ?? '';
+  static String get ptvApiKey => SettingsService.ptvApiKey ?? '';
+  static String get ptvProxyBase => SettingsService.ptvProxyBase ?? '';
+  static String get eControlLink => SettingsService.eControlLink ?? '';
 }
+
+
+
