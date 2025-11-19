@@ -5,12 +5,14 @@ import '../ui/pages/graph_view.dart';
 import '../ui/pages/login_view.dart';
 import '../ui/pages/list_view.dart';
 import '../ui/pages/add_edit_view.dart';
+import '../ui/pages/settings_view.dart';
 import '../ui/pages/sprit_view.dart';
 import '../utils/bindings/graph_binding.dart';
 import '../utils/bindings/login_binding.dart';
 import '../utils/bindings/list_binding.dart';
 import '../utils/bindings/add_edit_binding.dart';
-import 'bindings/sprit_binding.dart';
+import '../utils/bindings/settings_binding.dart';
+import '../utils/bindings/sprit_binding.dart';
 
 class SampleRouts {
 
@@ -43,6 +45,12 @@ class SampleRouts {
       name: SpritPage.namedRoute,
       binding: SpritBinding(),
       page: () => const SpritPage(),
+    ),
+    // Settings Page
+    GetPage(
+      name: SettingsPage.namedRoute,
+      binding: SettingsBinding(),
+      page: () => const SettingsPage(),
     ),
 
   ];

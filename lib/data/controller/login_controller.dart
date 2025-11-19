@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import '../../data/repository/appwrite_repository.dart';
+import '../../ui/components/custom_numeric_keyboard.dart';
+import '../../ui/pages/settings_view.dart';
+import '../../utils/extensions/static_helper.dart';
 import '../../ui/pages/list_view.dart';
 import '../models/log.dart';
 
@@ -144,5 +148,43 @@ class LoginController extends GetxController {
     passwordController.clear();
     nameController.clear();
     isSignIn(false);
+  }
+  //popup to change settings
+  void switchEingangPrf() {
+    String inputValue = '';
+    Get.defaultDialog(
+      title: 'Pin Nummer',
+      content: Container(
+        width: 350,
+        height: 350,
+        color: Colors.white,
+        child: CustomNumericKeyboard(
+          onValueChanged: (value) {
+            inputValue = value;
+          },
+        ),
+      ),
+      cancel: TextButton(
+        child: const Text('Cancel'),
+        onPressed: () {
+          Get.back();
+        },
+      ),
+      confirm: TextButton(
+        child: const Text('OK'),
+        onPressed: () {
+          DateTime now = DateTime.now();
+          String currentDayMonth = DateFormat('ddMM').format(now);
+          // Handle the input value here
+          if (inputValue == currentDayMonth) {
+            Get.back();
+            Get.offAndToNamed(SettingsPage.namedRoute);
+          } else {
+            Get.back();
+            StaticHelper.kDisplaySnackBarRed('Falsches Passwort!');
+          }
+        },
+      ),
+    );
   }
 }

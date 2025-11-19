@@ -1,11 +1,8 @@
-
-
 import 'package:flutter/material.dart';
 
-import '../../data/controller/add_edit_controller.dart';
 
 class MyTextFormField extends StatelessWidget {
-  final AddEditController editCtrl;
+  
   final bool? readOnly;
   final TextEditingController controller;
   final String labelText;
@@ -15,7 +12,6 @@ class MyTextFormField extends StatelessWidget {
   final TextInputType? keyboardType;
   const MyTextFormField({
     super.key,
-    required this.editCtrl,
     this.readOnly,
     required this.controller,
     required this.labelText,

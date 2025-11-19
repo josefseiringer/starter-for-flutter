@@ -57,7 +57,6 @@ class AddEditPage extends GetView<AddEditController> {
                       SizedBox(height: 20),
                       // Add your form fields here
                       MyTextFormField(
-                        editCtrl: editCtrl,
                         readOnly: true,
                         onTap: () async {
                           editCtrl.getDateFromDateTimePicker(context);
@@ -73,7 +72,6 @@ class AddEditPage extends GetView<AddEditController> {
                       ),
                       SizedBox(height: 20),
                       MyTextFormField(
-                        editCtrl: editCtrl,
                         controller: editCtrl.odometerController,
                         labelText: 'Kilometerstand',
                         keyboardType: TextInputType.number,
@@ -89,7 +87,6 @@ class AddEditPage extends GetView<AddEditController> {
                       ),
                       SizedBox(height: 20),
                       MyTextFormField(
-                        editCtrl: editCtrl,
                         controller: editCtrl.litersController,
                         labelText: 'Liter',
                         onChanged: (value) => editCtrl.calculateSummePreis(),
@@ -106,7 +103,6 @@ class AddEditPage extends GetView<AddEditController> {
                       ),
                       SizedBox(height: 20),
                       MyTextFormField(
-                        editCtrl: editCtrl,
                         controller: editCtrl.pricePerLiterController,
                         labelText: 'Preis pro Liter',
                         onChanged: (value) => editCtrl.calculateSummePreis(),
@@ -123,7 +119,6 @@ class AddEditPage extends GetView<AddEditController> {
                       ),
                       SizedBox(height: 20),
                       MyTextFormField(
-                        editCtrl: editCtrl,
                         controller: editCtrl.addressController,
                         labelText: 'Adresse',
                         validator: (value) {
@@ -136,7 +131,6 @@ class AddEditPage extends GetView<AddEditController> {
                       // Summe Preis Field
                       SizedBox(height: 20),
                       MyTextFormField(
-                        editCtrl: editCtrl,
                         readOnly: true,
                         controller: editCtrl.summeController,
                         labelText: 'Summe Preis',

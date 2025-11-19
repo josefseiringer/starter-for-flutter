@@ -73,4 +73,20 @@ class StaticHelper {
     );
   }
 
+  static SnackbarController kDisplaySnackBarRed(String szInfoText) {
+    return Get.snackbar('Info', szInfoText,
+        backgroundColor: Colors.red[600],
+        snackPosition: SnackPosition.TOP,
+        colorText: Colors.white,
+        snackStyle: SnackStyle.GROUNDED);
+  }
+
+  static SnackbarController kDisplaySnackBarGreen(String szInfoText) {
+    return Get.snackbar('Info', szInfoText,
+        backgroundColor: Colors.green[600],
+        snackPosition: SnackPosition.TOP,
+        colorText: Colors.black,
+        snackStyle: SnackStyle.GROUNDED);
+  }
+
 }

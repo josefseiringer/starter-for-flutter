@@ -12,6 +12,16 @@ class LoginPage extends GetView<LoginController> {
     var whiteOpacity50 = Colors.white.withAlpha(50);
     var whiteOpacity100 = Colors.white.withAlpha(100);
     return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          onPressed: () => logCtrl.switchEingangPrf(),
+          icon: Icon(Icons.settings),
+        ),
+        backgroundColor: Colors.blueGrey,
+        foregroundColor: Colors.white,
+        title: const Text('Login / Sign In'),
+        centerTitle: true,
+      ),
       body: Stack(
         fit: StackFit.expand,
         children: [
