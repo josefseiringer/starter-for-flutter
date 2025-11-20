@@ -1,4 +1,4 @@
-import '../config/settings_service.dart';
+import '../../config/settings_service.dart';
 
 class Environment {
   static String get appwritePublicEndpoint => SettingsService.appwriteEndpoint ?? '';

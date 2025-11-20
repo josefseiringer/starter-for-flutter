@@ -23,12 +23,6 @@ class SettingsPage extends GetView<SettingsController> {
             ),
             title: const Text('Einstellungen'),
             centerTitle: true,
-            actions: [
-              IconButton(
-                onPressed: () => settingsCtrl.saveSettings(),
-                icon: const Icon(Icons.save),
-              )
-            ],
           ),
           body: Container(
             decoration: BoxDecoration(
@@ -38,9 +32,58 @@ class SettingsPage extends GetView<SettingsController> {
               padding: const EdgeInsets.all(8.0),
               children: [
                 MyCardTextFormWithButton(
+                  controller: settingsCtrl.projectNameController,
+                  labelTextFormField: 'Project Name',
+                  onPressedButton: () => settingsCtrl.saveSettings('projectName'),
+                  buttonText: 'Update',
+                ),
+                SizedBox(height: 5),
+                MyCardTextFormWithButton(
                   controller: settingsCtrl.apiEndpointController,
                   labelTextFormField: 'API Endpoint',
-                  onPressedButton: () => settingsCtrl.saveSettings(),
+                  onPressedButton: () => settingsCtrl.saveSettings('apiEndpoint'),
+                  buttonText: 'Update',
+                ),
+                SizedBox(height: 5),
+                MyCardTextFormWithButton(
+                  controller: settingsCtrl.projectIdController,
+                  labelTextFormField: 'Project ID',
+                  onPressedButton: () => settingsCtrl.saveSettings('projectId'),
+                  buttonText: 'Update',
+                ),
+                SizedBox(height: 5),
+                MyCardTextFormWithButton(
+                  controller: settingsCtrl.databaseIdController,
+                  labelTextFormField: 'Database ID',
+                  onPressedButton: () => settingsCtrl.saveSettings('databaseId'),
+                  buttonText: 'Update',
+                ),
+                SizedBox(height: 5),
+                MyCardTextFormWithButton(
+                  controller: settingsCtrl.usersCollectionIdController,
+                  labelTextFormField: 'Users Collection ID',
+                  onPressedButton: () => settingsCtrl.saveSettings('usersCollectionId'),
+                  buttonText: 'Update',
+                ),
+                SizedBox(height: 5),
+                MyCardTextFormWithButton(
+                  controller: settingsCtrl.ptvApiKeyController,
+                  labelTextFormField: 'PTV API Key',
+                  onPressedButton: () => settingsCtrl.saveSettings('ptvApiKey'),
+                  buttonText: 'Update',
+                ),
+                SizedBox(height: 5),
+                MyCardTextFormWithButton(
+                  controller: settingsCtrl.ptvProxyBaseController,
+                  labelTextFormField: 'PTV Proxy Base',
+                  onPressedButton: () => settingsCtrl.saveSettings('ptvProxyBase'),
+                  buttonText: 'Update',
+                ),
+                SizedBox(height: 5),
+                MyCardTextFormWithButton(
+                  controller: settingsCtrl.eControlLinkController,
+                  labelTextFormField: 'E Control Link',
+                  onPressedButton: () => settingsCtrl.saveSettings('eControlLink'),
                   buttonText: 'Update',
                 ),
               ],
